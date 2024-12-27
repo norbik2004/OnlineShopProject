@@ -1,14 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShopProject.Services;
+using OnlineShopProject.Services.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+
+// Registration of the DbContext Service
 builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(connectionString);
 });
+
+// Registration of repository services
+
+builder.Services.AddScoped<IShopRepository, ShopRepository>();
 
 var app = builder.Build();
 
@@ -28,5 +35,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllerRoute(
+	name: "default",
+	pattern: "/",
+	defaults: new { Controller = "Home", action = "Index" });
 
 app.Run();
