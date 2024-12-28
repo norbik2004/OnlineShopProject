@@ -10,7 +10,8 @@ namespace OnlineShopProject.Services.Repository
 		{
 			this.ShopContext = context;
 		}
-		public IQueryable<Product> GetProducts => this.ShopContext.Products;
+		public IQueryable<Product> GetProducts => this.ShopContext.Products.Include(p => p.Category)
+                    .ThenInclude(p => p.Products);
 
         public Product ShowProductById(int productId)
         {

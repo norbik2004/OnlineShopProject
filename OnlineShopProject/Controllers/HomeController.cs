@@ -14,9 +14,12 @@ namespace OnlineShopProject.Controllers
         }
 
 
-        public ViewResult Index()
+        public ViewResult Index(string? category)
         {
-            return View(this.shopRepository.GetProducts);
+            ViewData["SelectedCategory"] = category;
+
+            return View(this.shopRepository.GetProducts
+                .Where(p => category == null || p.Category.CategoryName == category).ToList());
         }
 
         public IActionResult Error(string message)
