@@ -2,7 +2,9 @@
 {
 	public interface IShopRepository
 	{
-		IQueryable<Product> Products { get; }
+		IQueryable<Product> GetProducts { get; }
+
+		Product ShowProductById(int productId);
 
 	}
 }
