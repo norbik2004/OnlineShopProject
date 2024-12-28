@@ -1,0 +1,33 @@
+﻿@model IEnumerable<OnlineShopProject.Services.Product>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="d-flex justify-content-center align-items-center">
+    <h1 class="display-2 text-center">Welcome</h1>
+</div>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Name</th>
+            <th>CategoryID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>@product.Name</td>
+                <td>@product.CategoryId</td>
+            </tr>
+        }
+    </tbody>
+</table>
