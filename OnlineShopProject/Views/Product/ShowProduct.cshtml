@@ -1,11 +1,54 @@
 ﻿@model OnlineShopProject.Services.Product;
 
 @{
-	this.Layout = "_Layout";
+    this.Layout = "_Layout";
 }
 
-<h1>Product with ID @Model.ProductId</h1>
-<br />
-<h2>And name @Model.Name</h2>
-<br />
-<h3>category is @Model.Category.CategoryName</h3>
+<div class="container my-5">
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-info text-white">
+            <h1 class="h4 text-center">Product Details</h1>
+        </div>
+
+        <div class="card-body">
+            <h2 class="text-center text-secondary">Product: <strong>@Model.Name</strong></h2>
+            <p class="text-center"><strong>Description:</strong> @Model.Description</p>
+            <p class="text-center text-success"><strong>Price:</strong> $@Model.Price.ToString("F2")</p>
+
+            <h3 class="text-center text-dark mt-4">Category Details</h3>
+            <p class="text-center"><strong>Category Name:</strong> @Model.Category.CategoryName</p>
+            <p class="text-center"><strong>Description:</strong> @Model.Category.CategoryDescription</p>
+
+            <!-- simmilar products -->
+            <div class="container-fluid mt-4">
+                <h4 class="text-center text-muted">Related Products</h4>
+                <div class="row">
+                    @foreach (var product in Model.Category.Products)
+                    {
+                        @if(product.ProductId == Model.ProductId)
+                        {
+                            continue;
+                        }
+                        <div class="col-md-4 d-flex align-items-stretch mb-3">
+                            <div class="card w-100 h-100 shadow-sm">
+                                <div class="card-body text-bg-light">
+                                    <h5 class="card-title"><strong>@product.Name</strong></h5>
+                                    <p class="card-text">$@product.Price.ToString("F2")</p>
+                                    <button type="button" class="btn btn-outline-primary w-100"
+                                            onclick="location.href='/Product/@product.ProductId'">Show Product</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <div class="card-footer bg-light text-center">
+            <button class="btn btn-primary btn-lg">Buy Now</button>
+            <button class="btn btn-outline-secondary btn-lg">Add to Cart</button>
+        </div>
+    </div>
+</div>

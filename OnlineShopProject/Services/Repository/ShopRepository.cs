@@ -21,6 +21,7 @@ namespace OnlineShopProject.Services.Repository
 
 			var product = this.ShopContext.Products
                 .Include(p => p.Category)
+					.ThenInclude(p => p.Products)
                 .FirstOrDefault(p => p.ProductId == productId);
 
 			if (product == null)
