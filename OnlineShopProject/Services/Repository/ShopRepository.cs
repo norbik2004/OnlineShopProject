@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace OnlineShopProject.Services.Repository
 {
 	public class ShopRepository : IShopRepository
@@ -8,6 +10,27 @@ namespace OnlineShopProject.Services.Repository
 		{
 			this.ShopContext = context;
 		}
-		public IQueryable<Product> Products => this.ShopContext.Products;
-	}
+		public IQueryable<Product> GetProducts => this.ShopContext.Products.Include(p => p.Category)
+                    .ThenInclude(p => p.Products);
+
+        public Product ShowProductById(int productId)
+        {
+			if (productId < 0)
+			{
+				throw new KeyNotFoundException($"Product with ID {productId} not found.");
+			}
+
+			var product = this.ShopContext.Products
+                .Include(p => p.Category)
+					.ThenInclude(p => p.Products)
+                .FirstOrDefault(p => p.ProductId == productId);
+
+			if (product == null)
+			{
+				throw new KeyNotFoundException($"Product with ID {productId} not found.");
+            }
+
+			return product;
+        }
+    }
 }

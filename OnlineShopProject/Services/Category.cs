@@ -14,7 +14,7 @@ namespace OnlineShopProject.Services
 		[Required]
 		public string CategoryDescription { get; set; }
 
-		ICollection<Product> Products { get; set;} = new List<Product>();
+		public virtual ICollection<Product> Products { get; set;} = new List<Product>();
 
 	}
 }

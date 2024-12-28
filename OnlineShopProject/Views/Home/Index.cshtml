@@ -5,29 +5,22 @@
 }
 
 <div class="d-flex justify-content-center align-items-center">
-    <h1 class="display-2 text-center">Welcome</h1>
+    <h1 class="display-2 text-center" style: >Products in the shop</h1>
 </div>
 
-<table class="table table-striped table-dark">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Name</th>
-            <th>CategoryID</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div class="row">
         @foreach (var product in Model)
         {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.Description</td>
-                <td>@product.Price</td>
-                <td>@product.Name</td>
-                <td>@product.CategoryId</td>
-            </tr>
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body" style="background-color: whitesmoke;">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">Price: $@product.Price</p>
+                        <button type="button" class="btn btn-outline-primary w-100" onclick="location.href='/Product/@product.ProductId'">Show Product</button>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
