@@ -13,15 +13,13 @@ namespace OnlineShopProject.Components
             this.shopRepository = repo;
         }
 
-        public IViewComponentResult Invoke(string category)
+        public IViewComponentResult Invoke()
         {
             var categories = this.shopRepository.GetProducts
                 .Select(x => x.Category.CategoryName)
                 .Distinct()
                 .OrderBy(x => x)
             .ToList();
-
-            ViewData["SelectedCategory"] = category;
 
             return View(categories);
         }
