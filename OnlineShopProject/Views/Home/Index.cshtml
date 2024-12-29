@@ -5,18 +5,20 @@
 }
 
 <div class="d-flex justify-content-center align-items-center">
-    <h1 class="display-2 text-center" style: >Products in the shop</h1>
+    <h1 class="display-2 text-center">Products in the shop</h1>
 </div>
 
-<div class="container">
+<div class="container justify-content-center align-items-center">
     <div class="row">
         @foreach (var product in Model)
         {
             <div class="col-12 col-sm-6 col-md-4 mb-4">
-                <div class="card">
+                <div class="card align-items-center">
                     <div class="card-body" style="background-color: whitesmoke;">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">Price: $@product.Price</p>
+                        <img src="@($"images/{product.IMGFileLink}.png")"
+                        alt="@product.Name" class="card-img-top" style="width: 150px; height: 150px; object-fit: contain;">
+                        <h5 class="card-title text-center">@product.Name</h5>
+                        <p class="card-text text-center">Price: $@product.Price</p>
                         <button type="button" class="btn btn-outline-primary w-100" onclick="location.href='/Product/@product.ProductId'">Show Product</button>
                     </div>
                 </div>
@@ -24,3 +26,4 @@
         }
     </div>
 </div>
+

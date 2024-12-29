@@ -11,14 +11,20 @@
             <h1 class="h4 text-center">Product Details</h1>
         </div>
 
-        <div class="card-body">
-            <h2 class="text-center text-secondary">Product: <strong>@Model.Name</strong></h2>
-            <p class="text-center"><strong>Description:</strong> @Model.Description</p>
+        <div class="card-body align-items-center">
+
+            <div class="d-flex justify-content-center">
+                <img src="@($"/images/{Model.IMGFileLink}.png")"
+                     alt="@Model.Name" class="card-img-top" style="width: 250px; height: 250px; object-fit: contain;">
+            </div>
+            <h2 class="text-center text-secondary"><strong>@Model.Name</strong></h2>
+            <p class="text-center">@Model.Description</p>
+            
             <p class="text-center text-success"><strong>Price:</strong> $@Model.Price.ToString("F2")</p>
 
             <h3 class="text-center text-dark mt-4">Category Details</h3>
             <p class="text-center"><strong>Category Name:</strong> @Model.Category.CategoryName</p>
-            <p class="text-center"><strong>Description:</strong> @Model.Category.CategoryDescription</p>
+            <p class="text-center">@Model.Category.CategoryDescription</p>
 
             <!-- simmilar products -->
             <div class="container-fluid mt-4">
@@ -31,10 +37,12 @@
                             continue;
                         }
                         <div class="col-md-4 d-flex align-items-stretch mb-3">
-                            <div class="card w-100 h-100 shadow-sm">
-                                <div class="card-body text-bg-light">
-                                    <h5 class="card-title"><strong>@product.Name</strong></h5>
-                                    <p class="card-text">$@product.Price.ToString("F2")</p>
+                            <div class="card w-100 h-100 shadow-sm align-items-center">
+                                <div class="card-body text-bg-light align-items-center">
+                                    <img src="@($"/images/{product.IMGFileLink}.png")"
+                                         alt="@product.Name" class="card-img-top" style="width: 150px; height: 150px; object-fit: contain;">
+                                    <h5 class="card-title text-center"><strong>@product.Name</strong></h5>
+                                    <p class="card-text text-center">$@product.Price.ToString("F2")</p>
                                     <button type="button" class="btn btn-outline-primary w-100"
                                             onclick="location.href='/Product/@product.ProductId'">Show Product</button>
                                 </div>
@@ -50,5 +58,7 @@
             <button class="btn btn-primary btn-lg">Buy Now</button>
             <button class="btn btn-outline-secondary btn-lg">Add to Cart</button>
         </div>
+
+
     </div>
 </div>

@@ -27,6 +27,9 @@ namespace OnlineShopProject.Services
 		public int CategoryId { get; set; }
 
 		[Required]
+		public string IMGFileLink { get; set; } = string.Empty;
+
+		[Required]
 		public Category Category { get; set; }
 
 	}
