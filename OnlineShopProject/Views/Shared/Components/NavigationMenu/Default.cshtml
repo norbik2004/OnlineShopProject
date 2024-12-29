@@ -6,12 +6,11 @@
     </a>
     @foreach (string category in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn @(category == ViewData["SelectedCategory"] ? "btn-primary" : "btn-outline-secondary")"
+        <a class="btn @(category == ViewData["SelectedCategory"]?.ToString() ? "btn-primary" : "btn-outline-secondary")"
            asp-controller="Home"
            asp-action="Index"
            asp-route-category="@category">
             @category
         </a>
     }
-    <a>Selected Categoty: @this.ViewData["SelectedCategory"]</a>
 </div>
