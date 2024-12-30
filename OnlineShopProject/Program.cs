@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
@@ -15,7 +16,12 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 
 // Registration of repository services
 
+
+
 builder.Services.AddScoped<IShopRepository, ShopRepository>();
+
+builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<OnlineShopIdentityDbContext>();
 
 var app = builder.Build();
 

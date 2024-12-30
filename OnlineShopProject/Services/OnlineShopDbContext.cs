@@ -4,7 +4,7 @@ namespace OnlineShopProject.Services
 {
     public class OnlineShopDbContext : DbContext
     {
-        public OnlineShopDbContext(DbContextOptions options) : base(options)
+        public OnlineShopDbContext(DbContextOptions<OnlineShopDbContext> options) : base(options)
         {
              
         }
