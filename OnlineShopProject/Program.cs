@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register Razor Pages and MVC
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 // Registration of the DbContext Service
 builder.Services.AddDbContext<OnlineShopDbContext>(options =>
@@ -14,8 +17,18 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 });
 
 // Registration of repository services
-
 builder.Services.AddScoped<IShopRepository, ShopRepository>();
+
+// Identity services
+builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options =>
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]));
+
+builder.Services.AddIdentity<Users, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<OnlineShopIdentityDbContext>()
+.AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -25,25 +38,24 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
 
-
-// routes
+// Routes
 app.MapControllerRoute(
-	name: "default",
-	pattern: "/",
-	defaults: new { Controller = "Home", action = "Index" });
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    "error",
-    "Error",
+    name: "error",
+    pattern: "Error",
     defaults: new { Controller = "Home", action = "Error" });
 
 app.MapControllerRoute(
@@ -54,9 +66,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "category",
     pattern: "product/{category?}",
-    defaults: new { Controller = "Home", action = "Index"});
+    defaults: new { Controller = "Home", action = "Index" });
 
 app.MapFallbackToController("Error", "Home");
-
 
 await app.RunAsync();
