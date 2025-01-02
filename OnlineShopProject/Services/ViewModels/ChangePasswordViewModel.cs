@@ -11,7 +11,7 @@ namespace OnlineShopProject.Services.ViewModels
         [Required(ErrorMessage = "Password is Required")]
         [StringLength(40, MinimumLength = 6, ErrorMessage = "The {0} must be at {2} and at max {1} characters")]
         [DataType(DataType.Password)]
-        [Compare("ConfrimNewPassword", ErrorMessage = "Password are not the same")]
+        [Compare("ConfirmNewPassword", ErrorMessage = "Password are not the same")]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
 

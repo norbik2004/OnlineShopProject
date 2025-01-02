@@ -12,8 +12,8 @@ using OnlineShopProject.Services;
 namespace OnlineShopProject.Migrations.OnlineShopIdentityDb
 {
     [DbContext(typeof(OnlineShopIdentityDbContext))]
-    [Migration("20241230134059_User")]
-    partial class User
+    [Migration("20250102130216_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
