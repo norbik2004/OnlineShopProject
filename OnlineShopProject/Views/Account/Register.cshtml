@@ -1,0 +1,47 @@
+﻿@model RegisterViewModel;
+
+@{
+	Layout = "_AccountLayout";
+}
+
+<h1 class="display-6 text-center" style="margin-bottom:40px;">Register</h1>
+<form asp-action="Register" method="post">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<div class="mb-3">
+		<label asp-for="Name" class="form-label"></label>
+		<input asp-for="Name" class="form-control" />
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Email" class="form-label"></label>
+		<input asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="Password" class="form-label"></label>
+		<input asp-for="Password" class="form-control" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<div class="mb-3">
+		<label asp-for="ConfirmPassword" class="form-label"></label>
+		<input asp-for="ConfirmPassword" class="form-control" />
+		<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+	</div>
+
+	<input type="submit" value="Register" class="btn btn-success w-100 p-2" />
+
+	<p class="text-center mt-2">
+		Arleady have an account? <a asp-controller="Account" asp-action="Login" style="text-decoration:none;">Login</a>
+	</p>
+
+	<div class="text-center">
+		<div class="col navbar-brand"><a asp-controller="Home" asp-action="Index" class="col navbar-brand title">Back</a></div>
+	</div>
+</form>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+	}
+}
