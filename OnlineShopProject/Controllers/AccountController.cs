@@ -31,6 +31,7 @@ namespace OnlineShopProject.Controllers
 			if (ModelState.IsValid) {
 				Users users = new Users
 				{
+					FullName = model.Name,
 					Email = model.Email,
 					UserName = model.Email,
 				};
