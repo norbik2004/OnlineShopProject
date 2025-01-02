@@ -15,8 +15,20 @@
 
     .col.navbar-brand.title:hover {
         color: #ff0;
-        text-shadow: 0 0 10px #ff0, 0 0 20px #ff0, 0 0 30px #ff0; 
+        text-shadow: 0 0 10px #ff0, 0 0 20px #ff0, 0 0 30px #ff0;
     }
+
+    .floating-island {
+        background-color: floralwhite;
+        border-radius: 15px;
+        padding: 50px;
+        box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.23);
+        width: auto;
+        min-width: 400px;
+        min-height: 200px;
+    }
+
+
 </style>
 <body>
     <div class="bg-primary text-white p-2">
@@ -29,14 +41,14 @@
             </div>
         </div>
     </div>
-    
-    <div class="row m-1 p-1">
-        <div id="categories" class="col-3">
-            @await Component.InvokeAsync("NavigationMenu")
-        </div>
-        <div class="col-9">
+
+    <div class="row justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-auto text-center floating-island">
             @RenderBody()
         </div>
     </div>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
