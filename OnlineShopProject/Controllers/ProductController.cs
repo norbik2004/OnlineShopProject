@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopProject.Services.Repository;
 
 namespace OnlineShopProject.Controllers
@@ -12,6 +13,7 @@ namespace OnlineShopProject.Controllers
             this.shopRepository = repository;
         }
 
+		[Authorize]
 		public IActionResult ShowProduct(int productId)
 		{
 			try
