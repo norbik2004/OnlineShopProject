@@ -26,6 +26,8 @@ builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options =>
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
 })
 .AddEntityFrameworkStores<OnlineShopIdentityDbContext>()
 .AddDefaultTokenProviders();
