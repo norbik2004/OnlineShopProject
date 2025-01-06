@@ -13,7 +13,6 @@ namespace OnlineShopProject.Controllers
             this.shopRepository = repo;
         }
 
-
         public ViewResult Index(string? category)
         {
             ViewData["SelectedCategory"] = category;
