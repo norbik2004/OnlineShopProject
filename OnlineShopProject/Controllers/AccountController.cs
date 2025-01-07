@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks;
 using OnlineShopProject.Services;
+using OnlineShopProject.Services.Repository;
 using OnlineShopProject.Services.ViewModels;
 
 namespace OnlineShopProject.Controllers
@@ -10,11 +12,13 @@ namespace OnlineShopProject.Controllers
     {
 		private readonly SignInManager<Users> signInManager;
 		private readonly UserManager<Users> userManager;
+		private readonly IShopRepository shopRepository;
 
-		public AccountController(SignInManager<Users> signInManager, UserManager<Users> userManager)
+		public AccountController(SignInManager<Users> signInManager, UserManager<Users> userManager, IShopRepository repo)
 		{
 			this.signInManager = signInManager;
 			this.userManager = userManager;
+			this.shopRepository = repo;
 		}
 
 		public IActionResult Login()
@@ -155,5 +159,35 @@ namespace OnlineShopProject.Controllers
 			await signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home");
 		}
+
+		[Authorize]
+		public IActionResult ViewAccount()
+		{
+			string email = HttpContext.User.Identity?.Name ?? string.Empty;
+			
+			if (string.IsNullOrEmpty(email))
+			{
+				return Unauthorized("Please Log In");
+			}
+
+			var user = this.shopRepository.ShowUserByEmail(email);
+
+			if (user == null)
+			{
+				return NotFound("User not found.");
+			}
+
+			AccountViewModel viewModel = new AccountViewModel
+			{
+				FullName = user.FullName,
+				PhoneNumber = user.PhoneNumber,
+				Email = user.Email,
+			};
+
+
+			return View(viewModel);
+
+		}
+
 	}
 }

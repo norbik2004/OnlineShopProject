@@ -6,5 +6,7 @@
 
 		Product ShowProductById(int productId);
 
+		Users ShowUserByEmail(string email);
+
 	}
 }

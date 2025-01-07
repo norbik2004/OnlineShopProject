@@ -1,0 +1,36 @@
+﻿@model AccountViewModel;
+
+@{
+    Layout = "_Layout";
+}
+
+<h1 class="text-center text-success mt-4">
+    Account Details
+</h1>
+
+<div class="container shadow p-4 bg-white rounded">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+            Phone Number: @(string.IsNullOrEmpty(Model.PhoneNumber) ? "N/A" : Model.PhoneNumber)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Full Name: @(string.IsNullOrEmpty(Model.FullName) ? "N/A" : Model.FullName)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                Email: @(string.IsNullOrEmpty(Model.Email) ? "N/A" : Model.Email)
+            </p>
+        </div>
+    </div>
+
+</div>

@@ -6,9 +6,12 @@ namespace OnlineShopProject.Services.Repository
 	public class ShopRepository : IShopRepository
 	{
 		public OnlineShopDbContext ShopContext { get; set; }
-		public ShopRepository(OnlineShopDbContext context) 
+		public OnlineShopIdentityDbContext IdentityContext { get; set; }
+
+		public ShopRepository(OnlineShopDbContext context, OnlineShopIdentityDbContext idContext) 
 		{
 			this.ShopContext = context;
+			this.IdentityContext = idContext;
 		}
 		public IQueryable<Product> GetProducts => this.ShopContext.Products.Include(p => p.Category)
                     .ThenInclude(p => p.Products);
@@ -32,5 +35,18 @@ namespace OnlineShopProject.Services.Repository
 
 			return product;
         }
-    }
+
+		public Users ShowUserByEmail(string email)
+		{
+			var user = this.IdentityContext.Users.FirstOrDefault(p => p.Email == email);
+
+			if (user == null)
+			{
+				throw new KeyNotFoundException("User not found");
+			}
+
+			return user;
+
+		}
+	}
 }

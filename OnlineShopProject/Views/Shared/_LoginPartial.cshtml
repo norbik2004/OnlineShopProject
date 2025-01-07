@@ -5,6 +5,7 @@
 @if (signInManager.IsSignedIn(User))
 {
     <a class="nav-link text-white d-inline" asp-controller="Account" asp-action="Logout">Logout</a>
+    <a class="nav-link text-white d-inline" asp-controller="Account" asp-action="ViewAccount">Account</a>
 }
 else
 {
