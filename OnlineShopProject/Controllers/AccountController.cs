@@ -179,7 +179,9 @@ namespace OnlineShopProject.Controllers
 
 			AccountViewModel viewModel = new AccountViewModel
 			{
-				FullName = user.FullName
+				FullName = user.FullName,
+				PhoneNumber = user.PhoneNumber,
+				Email = user.Email,
 			};
 
 
