@@ -67,7 +67,20 @@ namespace OnlineShopProject.Controllers
 
 				if (result.Succeeded)
 				{
-					return RedirectToAction("Login", "Account");
+                    var roleResult = await userManager.AddToRoleAsync(users, "User");
+                    if (!roleResult.Succeeded)
+					{
+                        foreach (var error in roleResult.Errors)
+                        {
+                            ModelState.AddModelError("", $"Role assignment failed: {error.Description}");
+                        }
+
+                        await userManager.DeleteAsync(users);
+
+                        return View(model);
+                    }
+
+                    return RedirectToAction("Login", "Account");
 				}
 				else
 				{
@@ -82,6 +95,7 @@ namespace OnlineShopProject.Controllers
 
 			return View(model);
 		}
+
 		public IActionResult VerifyEmail()
 		{
 			return View();
