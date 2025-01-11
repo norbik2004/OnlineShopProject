@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
 using OnlineShopProject.Services.ViewModels;
@@ -67,7 +68,20 @@ namespace OnlineShopProject.Controllers
 
 				if (result.Succeeded)
 				{
-					return RedirectToAction("Login", "Account");
+                    var roleResult = await userManager.AddToRoleAsync(users, "User");
+                    if (!roleResult.Succeeded)
+					{
+                        foreach (var error in roleResult.Errors)
+                        {
+                            ModelState.AddModelError("", $"Role assignment failed: {error.Description}");
+                        }
+
+                        await userManager.DeleteAsync(users);
+
+                        return View(model);
+                    }
+
+                    return RedirectToAction("Login", "Account");
 				}
 				else
 				{
@@ -82,6 +96,7 @@ namespace OnlineShopProject.Controllers
 
 			return View(model);
 		}
+
 		public IActionResult VerifyEmail()
 		{
 			return View();
@@ -188,6 +203,59 @@ namespace OnlineShopProject.Controllers
 			return View(viewModel);
 
 		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> ChangeData(Users model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var user = await this.userManager.GetUserAsync(User);
+
+			if (user == null)
+			{
+				return RedirectToAction("Login", "Account");
+			}
+
+			user.PhoneNumber = model.PhoneNumber;
+			user.FullName = model.FullName;
+
+			var result = await this.userManager.UpdateAsync(user);
+
+			if (result.Succeeded)
+			{
+				return RedirectToAction("ViewAccount", "Account");
+			}
+
+			foreach (var error in result.Errors)
+			{
+				ModelState.AddModelError(string.Empty, error.Description);
+			}
+
+			return View(model);
+		}
+
+		[Authorize]
+		public IActionResult ChangeData()
+		{
+			try
+			{
+				string email = HttpContext.User.Identity?.Name ?? string.Empty;
+				var user = this.shopRepository.ShowUserByEmail(email);
+
+				return View(user);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return RedirectToAction("Error", "Home", new { message = ex.Message });
+			}
+		}
+
+
+		
 
 	}
 }
