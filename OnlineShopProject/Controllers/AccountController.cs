@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
 using OnlineShopProject.Services.ViewModels;
@@ -202,6 +203,59 @@ namespace OnlineShopProject.Controllers
 			return View(viewModel);
 
 		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> ChangeData(Users model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var user = await this.userManager.GetUserAsync(User);
+
+			if (user == null)
+			{
+				return RedirectToAction("Login", "Account");
+			}
+
+			user.PhoneNumber = model.PhoneNumber;
+			user.FullName = model.FullName;
+
+			var result = await this.userManager.UpdateAsync(user);
+
+			if (result.Succeeded)
+			{
+				return RedirectToAction("ViewAccount", "Account");
+			}
+
+			foreach (var error in result.Errors)
+			{
+				ModelState.AddModelError(string.Empty, error.Description);
+			}
+
+			return View(model);
+		}
+
+		[Authorize]
+		public IActionResult ChangeData()
+		{
+			try
+			{
+				string email = HttpContext.User.Identity?.Name ?? string.Empty;
+				var user = this.shopRepository.ShowUserByEmail(email);
+
+				return View(user);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return RedirectToAction("Error", "Home", new { message = ex.Message });
+			}
+		}
+
+
+		
 
 	}
 }

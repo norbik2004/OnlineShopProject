@@ -70,6 +70,8 @@ app.MapControllerRoute(
     pattern: "product/{category?}",
     defaults: new { Controller = "Home", action = "Index" });
 
+
+
 app.MapFallbackToController("Error", "Home");
 
 using (var scope = app.Services.CreateScope())

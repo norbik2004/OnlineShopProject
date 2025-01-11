@@ -1,0 +1,27 @@
+﻿@model OnlineShopProject.Services.Users
+
+@{
+	Layout = "_Layout";
+}
+<div class="container shadow p-4 bg-white rounded">
+	<form asp-action="ChangeData" method="post">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="mb-3">
+			<label asp-for="PhoneNumber" class="form-label"></label>
+			<input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber"/>
+			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="FullName" class="form-label"></label>
+			<input asp-for="FullName" class="form-control"/>
+			<span asp-validation-for="FullName" class="text-danger" value = "@Model.FullName"></span>
+		</div>
+
+		<input type="submit" value="ChangeData" class="btn btn-success w-100 p-2" />
+	
+		<div class="text-center">
+			<div class="col navbar-brand"><a asp-controller="Account" asp-action="ViewAccount" class="col navbar-brand title" style="color:black;">Back</a></div>
+		</div>
+	</form>
+</div>
