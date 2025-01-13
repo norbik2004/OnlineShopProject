@@ -48,6 +48,14 @@
 			<span asp-validation-for="Country" class="text-danger" value="@Model.Country"></span>
 		</div>
 
+		<div class="mb-3">
+			<label for="photo">Upload a Photo: </label>
+			<input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
+		</div>
+
+		<div class="mb-3">
+			<img id="imagePreview" src="" alt="Image Preview"  style="max-width: 200px; display: none;">
+		</div>
 
 		<div class="row" style="padding-top: 50px;">
 			<div class="col">
@@ -70,5 +78,20 @@
 	function formatPostalCode(input) {
 		let value = input.value.replace(/\D/g, "");
 		input.value = value.match(/(\d{2})(\d{0,3})/) ? `${value.slice(0, 2)}-${value.slice(2, 5)}` : value;
+	}
+
+	function previewImage(event) {
+		const file = event.target.files[0];
+		const reader = new FileReader();
+
+		reader.onload = function () {
+			const imagePreview = document.getElementById("imagePreview");
+			imagePreview.src = reader.result;
+			imagePreview.style.display = "block";
+		};
+
+		if (file) {
+			reader.readAsDataURL(file);
+		}
 	}
 </script>
