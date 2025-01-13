@@ -1,4 +1,4 @@
-﻿@model OnlineShopProject.Services.Users
+﻿@model ChangeDataViewModel
 
 @{
 	Layout = "_Layout";
@@ -8,7 +8,10 @@
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="mb-3">
 			<label asp-for="PhoneNumber" class="form-label"></label>
-			<input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber"/>
+			<input asp-for="PhoneNumber" class="form-control" value="@Model.PhoneNumber"
+			oninput="formatPhoneNumber(this)"
+			maxlength="11"
+			/>
 			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 		</div>
 
@@ -17,11 +20,22 @@
 			<input asp-for="FullName" class="form-control"/>
 			<span asp-validation-for="FullName" class="text-danger" value = "@Model.FullName"></span>
 		</div>
+		<div class="row" style="padding-top: 50px;">
+			<div class="col">
+				<input type="submit" value="ChangeData" class="btn btn-success w-100 p-2" />
+			</div>
 
-		<input type="submit" value="ChangeData" class="btn btn-success w-100 p-2" />
-	
-		<div class="text-center">
-			<div class="col navbar-brand"><a asp-controller="Account" asp-action="ViewAccount" class="col navbar-brand title" style="color:black;">Back</a></div>
+			<div class="col text-center">
+				<a class="btn btn-danger w-100 p-2" asp-controller="Account" asp-action="ViewAccount">Back</a>
+			</div>
 		</div>
 	</form>
 </div>
+
+<script>
+	// Format Phone Number Input
+	function formatPhoneNumber(input) {
+		let value = input.value.replace(/\D/g, "");
+		input.value = value.match(/.{1,3}/g)?.join("-") || "";s
+	}
+</script>

@@ -11,24 +11,24 @@
 <div class="container shadow p-4 bg-white rounded">
     <div class="row">
         <div class="col-md-12">
-            <p>
-            Phone Number: @(string.IsNullOrEmpty(Model.PhoneNumber) ? "N/A" : Model.PhoneNumber)
+            <p class="display-5">
+                <b>Email: </b>@(string.IsNullOrEmpty(Model.Email) ? "N/A" : Model.Email)
             </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <p>
-                Full Name: @(string.IsNullOrEmpty(Model.FullName) ? "N/A" : Model.FullName)
+            <p class="display-6">
+                <b>Full Name:</b> @(string.IsNullOrEmpty(Model.FullName) ? "N/A" : Model.FullName)
             </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <p>
-                Email: @(string.IsNullOrEmpty(Model.Email) ? "N/A" : Model.Email)
+            <p class="display-6">
+                <b>Phone Number:</b> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "N/A" : Model.PhoneNumber)
             </p>
         </div>
     </div>

@@ -206,7 +206,7 @@ namespace OnlineShopProject.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> ChangeData(Users model)
+		public async Task<IActionResult> ChangeData(ChangeDataViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -246,7 +246,13 @@ namespace OnlineShopProject.Controllers
 				string email = HttpContext.User.Identity?.Name ?? string.Empty;
 				var user = this.shopRepository.ShowUserByEmail(email);
 
-				return View(user);
+				ChangeDataViewModel viewModel = new ChangeDataViewModel
+				{
+					FullName = user.FullName,
+					PhoneNumber = user.PhoneNumber,
+				};
+
+				return View(viewModel);
 			}
 			catch (KeyNotFoundException ex)
 			{
