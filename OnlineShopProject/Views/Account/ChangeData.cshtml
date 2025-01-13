@@ -20,6 +20,32 @@
 			<input asp-for="FullName" class="form-control"/>
 			<span asp-validation-for="FullName" class="text-danger" value = "@Model.FullName"></span>
 		</div>
+
+		<div class="mb-3">
+			<label asp-for="Street" class="form-label"></label>
+			<input asp-for="Street" class="form-control" />
+			<span asp-validation-for="Street" class="text-danger" value="@Model.Street"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="City" class="form-label"></label>
+			<input asp-for="City" class="form-control" />
+			<span asp-validation-for="City" class="text-danger" value="@Model.City"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="PostalCode" class="form-label"></label>
+			<input asp-for="PostalCode" class="form-control" />
+			<span asp-validation-for="PostalCode" class="text-danger" value="@Model.PostalCode"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Country" class="form-label"></label>
+			<input asp-for="Country" class="form-control" />
+			<span asp-validation-for="Country" class="text-danger" value="@Model.Country"></span>
+		</div>
+
+
 		<div class="row" style="padding-top: 50px;">
 			<div class="col">
 				<input type="submit" value="ChangeData" class="btn btn-success w-100 p-2" />

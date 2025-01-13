@@ -35,6 +35,39 @@
 
     <div class="row">
         <div class="col-md-12">
+            <p class="display-6">
+                <b>Street:</b> @(string.IsNullOrEmpty(Model.Street) ? "N/A" : Model.Street)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>City:</b> @(string.IsNullOrEmpty(Model.City) ? "N/A" : Model.City)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>Postal Code:</b> @(string.IsNullOrEmpty(Model.PostalCode) ? "N/A" : Model.PostalCode)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>Country:</b> @(string.IsNullOrEmpty(Model.Country) ? "N/A" : Model.Country)
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
             <button class="alert-primary">
             <a asp-controller="Account" asp-action="ChangeData">Change Data</a>
             </button>

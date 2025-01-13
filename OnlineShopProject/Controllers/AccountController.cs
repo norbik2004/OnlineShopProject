@@ -197,6 +197,10 @@ namespace OnlineShopProject.Controllers
 				FullName = user.FullName,
 				PhoneNumber = user.PhoneNumber,
 				Email = user.Email,
+				Street = user.Street,
+				PostalCode = user.PostalCode,
+				Country = user.Country,
+				City = user.City,
 			};
 
 
@@ -222,6 +226,10 @@ namespace OnlineShopProject.Controllers
 
 			user.PhoneNumber = model.PhoneNumber;
 			user.FullName = model.FullName;
+			user.Street = model.Street;
+			user.City = model.City;
+			user.PostalCode = model.PostalCode;
+			user.Country = model.Country;
 
 			var result = await this.userManager.UpdateAsync(user);
 
@@ -250,6 +258,10 @@ namespace OnlineShopProject.Controllers
 				{
 					FullName = user.FullName,
 					PhoneNumber = user.PhoneNumber,
+					Street = user.Street,
+					City = user.City,
+					PostalCode = user.PostalCode,
+					Country = user.Country,
 				};
 
 				return View(viewModel);
