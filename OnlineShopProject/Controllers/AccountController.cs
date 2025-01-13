@@ -234,7 +234,15 @@ namespace OnlineShopProject.Controllers
 
 			if (model.Photo != null)
 			{
-				var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
+                var extension = Path.GetExtension(model.Photo.FileName)?.ToLower();
+
+                if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif")
+                {
+                    ModelState.AddModelError("Photo", "Only .jpg, .png, and .gif files are allowed.");
+                    return View(model);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
 				var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
 
 				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads"));
@@ -245,12 +253,7 @@ namespace OnlineShopProject.Controllers
 				}
 
 				user.PhotoPath = "/uploads/" + fileName;
-                Console.WriteLine("Photo provided");
             }
-			else
-			{
-				Console.WriteLine("Photo not provided");
-			}
 
 			var result = await this.userManager.UpdateAsync(user);
 
