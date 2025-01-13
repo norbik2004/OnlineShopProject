@@ -201,6 +201,7 @@ namespace OnlineShopProject.Controllers
 				PostalCode = user.PostalCode,
 				Country = user.Country,
 				City = user.City,
+				PhotoURL = user.PhotoPath,
 			};
 
 
@@ -230,6 +231,26 @@ namespace OnlineShopProject.Controllers
 			user.City = model.City;
 			user.PostalCode = model.PostalCode;
 			user.Country = model.Country;
+
+			if (model.Photo != null)
+			{
+				var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
+				var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads"));
+
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.Photo.CopyToAsync(fileStream);
+				}
+
+				user.PhotoPath = "/uploads/" + fileName;
+                Console.WriteLine("Photo provided");
+            }
+			else
+			{
+				Console.WriteLine("Photo not provided");
+			}
 
 			var result = await this.userManager.UpdateAsync(user);
 
@@ -262,6 +283,7 @@ namespace OnlineShopProject.Controllers
 					City = user.City,
 					PostalCode = user.PostalCode,
 					Country = user.Country,
+					PhotoPath = user.PhotoPath, 
 				};
 
 				return View(viewModel);

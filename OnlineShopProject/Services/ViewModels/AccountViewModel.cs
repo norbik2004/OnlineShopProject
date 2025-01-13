@@ -1,4 +1,6 @@
-﻿namespace OnlineShopProject.Services.ViewModels
+﻿using System.Security.Policy;
+
+namespace OnlineShopProject.Services.ViewModels
 {
     public class AccountViewModel
     {
@@ -15,6 +17,8 @@
         public string PostalCode { get; set; } = string.Empty;
 
         public string Country { get; set; } = string.Empty;
+
+        public string PhotoURL { get; set; } = string.Empty;
 
 	}
 }

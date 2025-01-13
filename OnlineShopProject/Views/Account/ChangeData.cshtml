@@ -4,7 +4,7 @@
 	Layout = "_Layout";
 }
 <div class="container shadow p-4 bg-white rounded">
-	<form asp-action="ChangeData" method="post">
+	<form asp-action="ChangeData" method="post" enctype="multipart/form-data">
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="mb-3">
 			<label asp-for="PhoneNumber" class="form-label"></label>
@@ -49,8 +49,8 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="photo">Upload a Photo: </label>
-			<input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
+			<label asp-for="Photo">Upload a Photo: </label>
+			<input asp-for="Photo" type="file" id="Photo" class="form-control" name="Photo" accept="image/*" onchange="previewImage(event)">
 		</div>
 
 		<div class="mb-3">

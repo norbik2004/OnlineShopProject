@@ -27,5 +27,7 @@ namespace OnlineShopProject.Services.ViewModels
 		[RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "City can only contain letters and spaces.")]
 		[DataType(DataType.Text)]
 		public string Country { get; set; } = string.Empty;
-	}
+		public IFormFile? Photo { get; set; }
+        public string? PhotoPath { get; set; }
+    }
 }

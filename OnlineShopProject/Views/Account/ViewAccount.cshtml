@@ -9,6 +9,23 @@
 </h1>
 
 <div class="container shadow p-4 bg-white rounded">
+
+    <div class="row">
+        <div class="col-md-12">
+            @if (!string.IsNullOrEmpty(Model.PhotoURL))
+            {
+                <p class="display-6">
+                    <b>Profile Photo:</b><br />
+                    <img src="@Model.PhotoURL" alt="User Photo" style="width: 150px; height: 150px; border-radius: 50%;" />
+                </p>
+            }
+            else
+            {
+                <p class="display-6"><b>No Profile Photo</b></p>
+            }
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <p class="display-5">
