@@ -9,29 +9,79 @@
 </h1>
 
 <div class="container shadow p-4 bg-white rounded">
+
     <div class="row">
         <div class="col-md-12">
-            <p>
-            Phone Number: @(string.IsNullOrEmpty(Model.PhoneNumber) ? "N/A" : Model.PhoneNumber)
+            @if (!string.IsNullOrEmpty(Model.PhotoURL))
+            {
+                <p class="display-6">
+                    <b>Profile Photo:</b><br />
+                    <img src="@Model.PhotoURL" alt="User Photo" style="width: 150px; height: 150px; border-radius: 50%;" />
+                </p>
+            }
+            else
+            {
+                <p class="display-6"><b>No Profile Photo</b></p>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-5">
+                <b>Email: </b>@(string.IsNullOrEmpty(Model.Email) ? "N/A" : Model.Email)
             </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <p>
-                Full Name: @(string.IsNullOrEmpty(Model.FullName) ? "N/A" : Model.FullName)
+            <p class="display-6">
+                <b>Full Name:</b> @(string.IsNullOrEmpty(Model.FullName) ? "N/A" : Model.FullName)
             </p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <p>
-                Email: @(string.IsNullOrEmpty(Model.Email) ? "N/A" : Model.Email)
+            <p class="display-6">
+                <b>Phone Number:</b> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "N/A" : Model.PhoneNumber)
             </p>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>Street:</b> @(string.IsNullOrEmpty(Model.Street) ? "N/A" : Model.Street)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>City:</b> @(string.IsNullOrEmpty(Model.City) ? "N/A" : Model.City)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>Postal Code:</b> @(string.IsNullOrEmpty(Model.PostalCode) ? "N/A" : Model.PostalCode)
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p class="display-6">
+                <b>Country:</b> @(string.IsNullOrEmpty(Model.Country) ? "N/A" : Model.Country)
+            </p>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-md-12">

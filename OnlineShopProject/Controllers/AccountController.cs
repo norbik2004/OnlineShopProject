@@ -197,6 +197,11 @@ namespace OnlineShopProject.Controllers
 				FullName = user.FullName,
 				PhoneNumber = user.PhoneNumber,
 				Email = user.Email,
+				Street = user.Street,
+				PostalCode = user.PostalCode,
+				Country = user.Country,
+				City = user.City,
+				PhotoURL = user.PhotoPath,
 			};
 
 
@@ -206,7 +211,7 @@ namespace OnlineShopProject.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> ChangeData(Users model)
+		public async Task<IActionResult> ChangeData(ChangeDataViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -222,6 +227,33 @@ namespace OnlineShopProject.Controllers
 
 			user.PhoneNumber = model.PhoneNumber;
 			user.FullName = model.FullName;
+			user.Street = model.Street;
+			user.City = model.City;
+			user.PostalCode = model.PostalCode;
+			user.Country = model.Country;
+
+			if (model.Photo != null)
+			{
+                var extension = Path.GetExtension(model.Photo.FileName)?.ToLower();
+
+                if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif")
+                {
+                    ModelState.AddModelError("Photo", "Only .jpg, .png, and .gif files are allowed.");
+                    return View(model);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Photo.FileName);
+				var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+				Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads"));
+
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.Photo.CopyToAsync(fileStream);
+				}
+
+				user.PhotoPath = "/uploads/" + fileName;
+            }
 
 			var result = await this.userManager.UpdateAsync(user);
 
@@ -246,7 +278,18 @@ namespace OnlineShopProject.Controllers
 				string email = HttpContext.User.Identity?.Name ?? string.Empty;
 				var user = this.shopRepository.ShowUserByEmail(email);
 
-				return View(user);
+				ChangeDataViewModel viewModel = new ChangeDataViewModel
+				{
+					FullName = user.FullName,
+					PhoneNumber = user.PhoneNumber,
+					Street = user.Street,
+					City = user.City,
+					PostalCode = user.PostalCode,
+					Country = user.Country,
+					PhotoPath = user.PhotoPath, 
+				};
+
+				return View(viewModel);
 			}
 			catch (KeyNotFoundException ex)
 			{

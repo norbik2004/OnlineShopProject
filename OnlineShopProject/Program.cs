@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopProject.Services;
@@ -18,6 +19,13 @@ builder.Services.AddDbContext<OnlineShopDbContext>(options =>
 
 // Registration of repository services
 builder.Services.AddScoped<IShopRepository, ShopRepository>();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+	options.ValueLengthLimit = 1024 * 1024 * 10;  // 10 MB
+	options.MultipartBodyLengthLimit = 1024 * 1024 * 10;  // 10 MB
+});
+
 
 // Identity services
 builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options =>
