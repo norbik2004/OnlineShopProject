@@ -1,11 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using OnlineShopProject.Services
 @inject SignInManager<Users> signInManager;
+@inject UserManager<Users> userManager;
+
+
+<a class="nav-link text-white d-inline" asp-controller="Cart" asp-action="ViewCart" style="display: inline-flex; align-items: center; gap: 4px;">
+    Cart
+    <i class="fas fa-shopping-cart"></i>
+</a>
 
 @if (signInManager.IsSignedIn(User))
 {
+    var user = await userManager.GetUserAsync(User);
+    var roles = await userManager.GetRolesAsync(user);
+
+    if (roles.Contains("Admin"))
+    {
+        <a class="nav-link text-white d-inline" asp-controller="Admin" asp-action="Dashboard">Admin</a>
+    }
+
+    string profileURL = user.PhotoPath;
     <a class="nav-link text-white d-inline" asp-controller="Account" asp-action="Logout">Logout</a>
     <a class="nav-link text-white d-inline" asp-controller="Account" asp-action="ViewAccount">Account</a>
+    <img src="@profileURL" style="height: 40px; width: 40px; display: inline-block; margin-left: 5px; border-radius: 50%;" />
 }
 else
 {

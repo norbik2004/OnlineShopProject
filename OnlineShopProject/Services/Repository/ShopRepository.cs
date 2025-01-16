@@ -48,5 +48,17 @@ namespace OnlineShopProject.Services.Repository
 			return user;
 
 		}
+
+		public IEnumerable<Users> GetAllUsers()
+		{
+			IEnumerable<Users> users = this.IdentityContext.Users;
+
+			if (users == null || !users.Any())
+			{
+				throw new KeyNotFoundException("Users not found");
+			}
+
+			return users;
+		}
 	}
 }

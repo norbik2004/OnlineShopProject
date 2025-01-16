@@ -33,9 +33,18 @@ namespace OnlineShopProject.Controllers
 			if (ModelState.IsValid)
 			{
 				var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+				
 
 				if (result.Succeeded)
 				{
+					var user = await userManager.FindByEmailAsync(model.Email);
+					var roles = await userManager.GetRolesAsync(user);
+
+					if (roles.Contains("Admin"))
+					{
+						return RedirectToAction("Dashboard", "Admin");
+					}
+
 					return RedirectToAction("Index", "Home");
 				}
 				else
@@ -252,7 +261,22 @@ namespace OnlineShopProject.Controllers
 					await model.Photo.CopyToAsync(fileStream);
 				}
 
-				user.PhotoPath = "/uploads/" + fileName;
+                if (user.PhotoPath != null)
+                {
+                    string photoPath = user.PhotoPath.TrimStart('/');
+
+                    photoPath = photoPath.Replace("uploads\\", "").Replace("uploads/", "");
+
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", photoPath);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+
+                user.PhotoPath = "/uploads/" + fileName;
             }
 
 			var result = await this.userManager.UpdateAsync(user);
