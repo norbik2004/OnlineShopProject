@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShopProject.Services.Repository
@@ -60,5 +61,6 @@ namespace OnlineShopProject.Services.Repository
 
 			return users;
 		}
-	}
+
+    }
 }

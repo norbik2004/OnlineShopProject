@@ -1,4 +1,6 @@
-﻿namespace OnlineShopProject.Services.Repository
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace OnlineShopProject.Services.Repository
 {
 	public interface IShopRepository
 	{
@@ -10,5 +12,5 @@
 
 		IEnumerable<Users> GetAllUsers();
 
-	}
+    }
 }
