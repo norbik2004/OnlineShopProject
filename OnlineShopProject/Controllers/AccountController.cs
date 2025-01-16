@@ -252,7 +252,22 @@ namespace OnlineShopProject.Controllers
 					await model.Photo.CopyToAsync(fileStream);
 				}
 
-				user.PhotoPath = "/uploads/" + fileName;
+                if (user.PhotoPath != null)
+                {
+                    string photoPath = user.PhotoPath.TrimStart('/');
+
+                    photoPath = photoPath.Replace("uploads\\", "").Replace("uploads/", "");
+
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", photoPath);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+
+                user.PhotoPath = "/uploads/" + fileName;
             }
 
 			var result = await this.userManager.UpdateAsync(user);
