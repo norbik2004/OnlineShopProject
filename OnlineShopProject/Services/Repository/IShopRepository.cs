@@ -8,5 +8,7 @@
 
 		Users ShowUserByEmail(string email);
 
+		IEnumerable<Users> GetAllUsers();
+
 	}
 }
