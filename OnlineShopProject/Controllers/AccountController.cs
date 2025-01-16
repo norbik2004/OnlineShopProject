@@ -33,9 +33,18 @@ namespace OnlineShopProject.Controllers
 			if (ModelState.IsValid)
 			{
 				var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+				
 
 				if (result.Succeeded)
 				{
+					var user = await userManager.FindByEmailAsync(model.Email);
+					var roles = await userManager.GetRolesAsync(user);
+
+					if (roles.Contains("Admin"))
+					{
+						return RedirectToAction("Dashboard", "Admin");
+					}
+
 					return RedirectToAction("Index", "Home");
 				}
 				else
