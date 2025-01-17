@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnlineShopProject.Services.ViewModels
+namespace OnlineShopProject.Services.ViewModels.Account
 {
     public class VerifyEmailViewModel
     {

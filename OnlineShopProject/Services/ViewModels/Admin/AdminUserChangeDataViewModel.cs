@@ -1,4 +1,4 @@
-﻿namespace OnlineShopProject.Services.ViewModels
+﻿namespace OnlineShopProject.Services.ViewModels.Admin
 {
     public class AdminUserChangeDataViewModel
     {

@@ -5,7 +5,7 @@ using Microsoft.Build.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
-using OnlineShopProject.Services.ViewModels;
+using OnlineShopProject.Services.ViewModels.Account;
 
 namespace OnlineShopProject.Controllers
 {

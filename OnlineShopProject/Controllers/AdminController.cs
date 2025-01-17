@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
-using OnlineShopProject.Services.ViewModels;
+using OnlineShopProject.Services.ViewModels.Account;
+using OnlineShopProject.Services.ViewModels.Admin;
 
 namespace OnlineShopProject.Controllers
 {
-	[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 	public class AdminController : Controller
     {
         public readonly IShopRepository shopRepository;

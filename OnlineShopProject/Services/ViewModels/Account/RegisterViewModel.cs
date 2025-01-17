@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnlineShopProject.Services.ViewModels
+namespace OnlineShopProject.Services.ViewModels.Account
 {
     public class RegisterViewModel
-	{
+    {
         [Required(ErrorMessage = "Name is Required")]
         public string Name { get; set; }
 
