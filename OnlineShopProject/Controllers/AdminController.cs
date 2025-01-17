@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Rewrite;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
@@ -175,6 +176,25 @@ namespace OnlineShopProject.Controllers
 
             return View(model);
         }
+
+        public IActionResult ViewProducts(int page = 1)
+        {
+			if (ModelState.IsValid)
+			{
+				int pageSize = 5;
+                IQueryable<Product> products = this.shopRepository.GetProducts();
+
+                IQueryable<Product> productsToShow = products.Skip((page - 1) * pageSize).Take(pageSize);
+
+                ViewData["CurrentPage"] = page;
+				ViewData["TotalPages"] = (int)Math.Ceiling((double)products.Count() / pageSize);
+				ViewData["TotalProducts"] = products.Count();
+
+				return View(productsToShow);
+			}
+
+			return View();
+		}
 
     }
 }

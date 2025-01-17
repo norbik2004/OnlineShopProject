@@ -14,8 +14,11 @@ namespace OnlineShopProject.Services.Repository
 			this.ShopContext = context;
 			this.IdentityContext = idContext;
 		}
-		public IQueryable<Product> GetProducts => this.ShopContext.Products.Include(p => p.Category)
-                    .ThenInclude(p => p.Products);
+		public IQueryable<Product> GetProducts()
+		{
+			return this.ShopContext.Products.Include(p => p.Category)
+					.ThenInclude(p => p.Products);
+		}
 
         public Product ShowProductById(int productId)
         {
@@ -61,6 +64,5 @@ namespace OnlineShopProject.Services.Repository
 
 			return users;
 		}
-
     }
 }

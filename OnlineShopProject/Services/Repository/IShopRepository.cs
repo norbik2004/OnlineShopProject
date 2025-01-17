@@ -4,7 +4,7 @@ namespace OnlineShopProject.Services.Repository
 {
 	public interface IShopRepository
 	{
-		IQueryable<Product> GetProducts { get; }
+		IQueryable<Product> GetProducts();
 
 		Product ShowProductById(int productId);
 
