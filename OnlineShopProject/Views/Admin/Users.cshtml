@@ -10,6 +10,7 @@
     int startIndex = (currentPage - 1) * pageSize + 1;
     int endIndex = currentPage * pageSize;
     if (endIndex > userAmount) endIndex = userAmount;
+    int index = startIndex;
 }
 
 <h2>LIST OF USERS</h2>
@@ -19,6 +20,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Number</th>
             <th>Email</th>
             <th>Actions</th>
         </tr>
@@ -27,6 +29,7 @@
         @foreach (var user in Model)
         {
             <tr>
+                <td>@index</td>
                 <td>@user.Email</td>
                 <td>
                     <a asp-action="UserDetails" asp-route-id="@user.Email" class="btn btn-info">Show More</a>
@@ -38,6 +41,9 @@
                     </form>
                 </td>
             </tr>
+            {
+                index += 1;
+            }
         }
     </tbody>
 </table>

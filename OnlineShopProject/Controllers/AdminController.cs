@@ -119,7 +119,10 @@ namespace OnlineShopProject.Controllers
         }
 
 
-
+        public IActionResult UserChangeData(string email)
+        {
+            return View();
+        }
 
     }
 }
