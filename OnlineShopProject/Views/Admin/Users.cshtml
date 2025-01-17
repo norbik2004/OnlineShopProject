@@ -2,7 +2,7 @@
 
 @{
     Layout = "_AdminLayout";
-    int pageSize = 3;
+    int pageSize = 5;
     int currentPage = ViewData["CurrentPage"] as int? ?? 1;
     int totalPages = ViewData["TotalPages"] as int? ?? 1;
     int userAmount = ViewData["TotalUsers"] as int? ?? 1;
@@ -10,6 +10,7 @@
     int startIndex = (currentPage - 1) * pageSize + 1;
     int endIndex = currentPage * pageSize;
     if (endIndex > userAmount) endIndex = userAmount;
+    int index = startIndex;
 }
 
 <h2>LIST OF USERS</h2>
@@ -19,6 +20,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Number</th>
             <th>Email</th>
             <th>Actions</th>
         </tr>
@@ -27,24 +29,44 @@
         @foreach (var user in Model)
         {
             <tr>
+                <td>@index</td>
                 <td>@user.Email</td>
                 <td>
                     <a asp-action="UserDetails" asp-route-id="@user.Email" class="btn btn-info">Show More</a>
-                    <a asp-action="Delete" asp-route-id="@user.Email" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                    <form asp-action="DeleteUser" asp-route-email="@user.Email" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this user?');">
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
+            {
+                index += 1;
+            }
         }
     </tbody>
 </table>
-
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <div class="text-center">
     @if (currentPage > 1)
     {
-        <a asp-action="Users" asp-route-page="@(currentPage - 1)" class="btn btn-secondary">Go Back</a>
+        <a asp-action="Users" asp-route-page="@(currentPage - 1)" class="btn btn-secondary">Back</a>
     }
 
     @if (currentPage < totalPages)
     {
-        <a asp-action="Users" asp-route-page="@(currentPage + 1)" class="btn btn-primary">Go Further</a>
+        <a asp-action="Users" asp-route-page="@(currentPage + 1)" class="btn btn-primary">Next</a>
     }
 </div>

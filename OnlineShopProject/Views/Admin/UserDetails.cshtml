@@ -1,5 +1,62 @@
-﻿@{
-	Layout = "_AdminLayout";
+﻿@model AccountViewModel
+
+@{
+    Layout = "_AdminLayout";
 }
 
 <h2>User Details</h2>
+
+<table class="table table-striped table-bordered">
+    <tbody>
+        <tr>
+            <th>Email</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td>@Model.FullName</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>@Model.PhoneNumber</td>
+        </tr>
+        <tr>
+            <th>Street</th>
+            <td>@Model.Street</td>
+        </tr>
+        <tr>
+            <th>City</th>
+            <td>@Model.City</td>
+        </tr>
+        <tr>
+            <th>Postal Code</th>
+            <td>@Model.PostalCode</td>
+        </tr>
+        <tr>
+            <th>Country</th>
+            <td>@Model.Country</td>
+        </tr>
+        <tr>
+            <th>Photo</th>
+            <td>
+                @if (!string.IsNullOrEmpty(Model.PhotoURL))
+                {
+                    <img src="@Model.PhotoURL" alt="User Photo" class="img-fluid rounded" style="max-width: 150px;">
+                }
+                else
+                {
+                    <span>No photo available</span>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col">
+        <a asp-action="Users" asp-controller="Admin" class="btn btn-danger w-100 p-2">Back</a>
+    </div>
+    <div class="col">
+        <a asp-action="UserChangeData" asp-controller="Admin" asp-route-email="@Model.Email" class="btn btn-primary w-100 p-2">Change Data</a>
+    </div>
+</div>

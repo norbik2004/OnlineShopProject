@@ -15,7 +15,7 @@ namespace OnlineShopProject.Components
 
         public IViewComponentResult Invoke()
         {
-            var categories = this.shopRepository.GetProducts
+            var categories = this.shopRepository.GetProducts()
                 .Select(x => x.Category.CategoryName)
                 .Distinct()
                 .OrderBy(x => x)

@@ -1,8 +1,10 @@
-﻿namespace OnlineShopProject.Services.Repository
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace OnlineShopProject.Services.Repository
 {
 	public interface IShopRepository
 	{
-		IQueryable<Product> GetProducts { get; }
+		IQueryable<Product> GetProducts();
 
 		Product ShowProductById(int productId);
 
@@ -10,5 +12,5 @@
 
 		IEnumerable<Users> GetAllUsers();
 
-	}
+    }
 }

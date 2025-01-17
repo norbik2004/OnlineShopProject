@@ -1,0 +1,58 @@
+﻿@model AdminUserChangeDataViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Change User Data</h2>
+<h6>@Model.Email</h6>
+
+<form asp-action="UserChangeData" method="post" asp-route-email="@Model.Email" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="FullName">Full Name</label>
+        <input type="text" id="FullName" name="FullName" value="@Model.FullName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input type="text" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" oninput="formatPhoneNumber(this)" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Street">Street</label>
+        <input type="text" id="Street" name="Street" value="@Model.Street" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="City">City</label>
+        <input type="text" id="City" name="City" value="@Model.City" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostalCode">Postal Code</label>
+        <input type="text" id="PostalCode" name="PostalCode" value="@Model.PostalCode" class="form-control" oninput="formatPostalCode(this)" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Country">Country</label>
+        <input type="text" id="Country" name="Country" value="@Model.Country" class="form-control" />
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <a asp-action="UserDetails" asp-controller="Admin" asp-route-email="@Model.Email" class="btn btn-danger w-100 p-2">Back</a>
+        </div>
+
+        <div class="col">
+            <input type="submit" value="Change Data" class="btn btn-success w-100 p-2" />
+        </div>
+    </div>
+</form>
+
+<script>
+    function formatPhoneNumber(input) {
+        let value = input.value.replace(/\D/g, "");
+        input.value = value.match(/.{1,3}/g)?.join("-") || "";
+    }
+
+    function formatPostalCode(input) {
+        let value = input.value.replace(/\D/g, "");
+        input.value = value.match(/(\d{2})(\d{0,3})/) ? `${value.slice(0, 2)}-${value.slice(2, 5)}` : value;
+    }
+
+</script>

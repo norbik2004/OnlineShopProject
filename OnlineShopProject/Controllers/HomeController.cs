@@ -17,7 +17,7 @@ namespace OnlineShopProject.Controllers
         {
             ViewData["SelectedCategory"] = category;
 
-            return View(this.shopRepository.GetProducts
+            return View(this.shopRepository.GetProducts()
                 .Where(p => category == null || p.Category.CategoryName == category).ToList());
         }
 
