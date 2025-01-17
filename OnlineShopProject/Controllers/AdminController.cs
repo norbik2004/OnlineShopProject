@@ -118,10 +118,61 @@ namespace OnlineShopProject.Controllers
             return View("Error", result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UserChangeData(string email, AdminUserChangeDataViewModel model)
+        {
+
+            var user = await this.userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            user.PhoneNumber = string.IsNullOrEmpty(model.PhoneNumber) ? "" : model.PhoneNumber;
+            user.FullName = string.IsNullOrEmpty(model.FullName) ? "" : model.FullName;
+            user.Street = string.IsNullOrEmpty(model.Street) ? "" : model.Street;
+            user.City = string.IsNullOrEmpty(model.City) ? "" : model.City;
+            user.PostalCode = string.IsNullOrEmpty(model.PostalCode) ? "" : model.PostalCode;
+            user.Country = string.IsNullOrEmpty(model.Country) ? "" : model.Country;
+
+            var result = await this.userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("UserDetails", "Admin", new { email = model.Email });
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
+
+        }
 
         public IActionResult UserChangeData(string email)
         {
-            return View();
+            var user = this.shopRepository.ShowUserByEmail(email);
+
+            if (user == null)
+            {
+                return BadRequest("NO USER FOUND");
+            }
+
+            AdminUserChangeDataViewModel model = new AdminUserChangeDataViewModel
+            {
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Street = user.Street,
+                City = user.City,
+                PostalCode = user.PostalCode,
+                Country = user.Country,
+                FullName = user.FullName,
+            };
+
+            return View(model);
         }
 
     }
