@@ -196,5 +196,24 @@ namespace OnlineShopProject.Controllers
 			return View();
 		}
 
+        [HttpGet("Admin/ProductDetails/{productId}")]
+        public async Task<IActionResult> ViewProductDetails(int productId)
+        {
+            Product product = this.shopRepository.ShowProductById(productId);
+
+            AdminProductDetailsViewModel viewModel = new()
+            {
+                ProductId = product.ProductId,
+                Price = product.Price,
+                Description = product.Description,
+                Category = product.Category,
+                CategoryId = product.CategoryId,
+                IMGFileLink = product.IMGFileLink,
+                Name = product.Name,
+            };
+
+            return View(viewModel);
+        }
+
     }
 }

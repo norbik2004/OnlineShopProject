@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xml:lang="en">
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -8,6 +7,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .content {
+        flex: 1;
+    }
+
     .col.navbar-brand.title {
         color: white;
         transition: text-shadow 0.3s ease, color 0.3s ease;
@@ -15,7 +25,7 @@
 
     .col.navbar-brand.title:hover {
         color: #ff0;
-        text-shadow: 0 0 10px #ff0, 0 0 20px #ff0, 0 0 30px #ff0; 
+        text-shadow: 0 0 10px #ff0, 0 0 20px #ff0, 0 0 30px #ff0;
     }
 </style>
 <body>
@@ -29,14 +39,22 @@
             </div>
         </div>
     </div>
-    
-    <div class="row m-1 p-1">
-        <div id="categories" class="col-3">
-            @await Component.InvokeAsync("NavigationMenu")
-        </div>
-        <div class="col-9">
-            @RenderBody()
+
+    <div class="content">
+        <div class="row m-1 p-1">
+            <div id="categories" class="col-3">
+                @await Component.InvokeAsync("NavigationMenu")
+            </div>
+            <div class="col-9">
+                @RenderBody()
+            </div>
         </div>
     </div>
+
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <div class="container">
+            &copy; 2025 SportsStore. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>

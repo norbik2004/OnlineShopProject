@@ -1,0 +1,74 @@
+﻿@model AdminProductDetailsViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Product Details</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th colspan="2">Product Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Product ID</th>
+            <td>@Model.ProductId</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@Model.Description</td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td>@Model.Price.ToString("C")</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>
+                @if (!string.IsNullOrEmpty(Model.IMGFileLink))
+                {
+                    <img src="@($"/images/{@Model.IMGFileLink}.png")" alt="Product Image" class="img-fluid" style="max-width: 200px;" />
+                }
+                else
+                {
+                    <span>No image available</span>
+                }
+            </td>
+        </tr>
+    </tbody>
+    <thead class="table-dark">
+        <tr>
+            <th colspan="2">Category Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Category ID</th>
+            <td>@Model.Category.CategoryId</td>
+        </tr>
+        <tr>
+            <th>Category Name</th>
+            <td>@Model.Category.CategoryName</td>
+        </tr>
+        <tr>
+            <th>Category Description</th>
+            <td>@Model.Category.CategoryDescription</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row" style="padding-top:25px;">
+    <div class="col">
+        <a asp-action="ViewProducts" asp-controller="Admin" class="btn btn-danger w-100 p-2">Back</a>
+    </div>
+    <div class="col">
+        <a asp-action="ProductChangeDetails" asp-controller="Admin" asp-route-email="@Model.ProductId" class="btn btn-primary w-100 p-2">Change Data</a>
+    </div>
+</div>
