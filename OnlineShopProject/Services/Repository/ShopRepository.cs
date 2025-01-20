@@ -20,7 +20,7 @@ namespace OnlineShopProject.Services.Repository
 					.ThenInclude(p => p.Products);
 		}
 
-        public Product ShowProductById(int productId)
+        public Product ShowProductById(long productId)
         {
 			if (productId < 0)
 			{
@@ -65,7 +65,7 @@ namespace OnlineShopProject.Services.Repository
 			return users;
 		}
 
-        public async Task<bool> DeleteProductAsync(int productId)
+        public async Task<bool> DeleteProductAsync(long productId)
         {
 			if (productId < 0)
 			{
@@ -79,11 +79,39 @@ namespace OnlineShopProject.Services.Repository
 				throw new KeyNotFoundException("product not found");
 			}
 
-			this.ShopContext.Products.Remove(product);
+            if (!string.IsNullOrEmpty(product.IMGFileLink))
+            {
+                DeleteImage(product.IMGFileLink);
+            }
+
+            this.ShopContext.Products.Remove(product);
 
 			await this.ShopContext.SaveChangesAsync();
 
 			return true;
         }
-    }
+
+        private void DeleteImage(string imagePath)
+        {
+            string basePath = AppContext.BaseDirectory;
+
+            string rootPath = basePath.Substring(0, basePath.IndexOf("bin", StringComparison.Ordinal));
+
+            string fullPath = Path.Combine(rootPath, "wwwroot", "images", imagePath);
+
+			fullPath += ".png";
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+		public List<Category> GetAllCategories()
+		{
+			List<Category> categories = this.ShopContext.Categories.ToList();
+
+			return categories;
+		}
+	}
 }

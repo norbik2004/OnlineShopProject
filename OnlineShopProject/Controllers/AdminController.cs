@@ -218,11 +218,18 @@ namespace OnlineShopProject.Controllers
 
         [HttpPost("{productId}")]
         [ActionName("DeleteProduct")]
-        public async Task<IActionResult> DeleteProduct(int productId)
+        public async Task<IActionResult> DeleteProduct(long productId)
         {
             try
             {
-                var result = this.shopRepository.
+                var result = await this.shopRepository.DeleteProductAsync(productId);
+
+                if (result)
+                {
+                    return RedirectToAction("ViewProducts", "Admin");
+                }
+
+                return BadRequest("Product could not be deleted.");
             }
             catch (Exception ex)
             {
@@ -230,5 +237,27 @@ namespace OnlineShopProject.Controllers
             }
         }
 
-    }
+        
+		public IActionResult ProductChangeDetails(long productId)
+        {
+            Product product = this.shopRepository.ShowProductById(productId);
+            List<Category> categories = this.shopRepository.GetAllCategories();
+
+			AdminProductChangeDataViewModel
+                viewModel = new()
+			{
+				ProductId = product.ProductId,
+				Price = product.Price,
+				Description = product.Description,
+				Category = product.Category,
+				CategoryId = product.CategoryId,
+				IMGFileLink = product.IMGFileLink,
+				Name = product.Name,
+                Categories = categories,
+			};
+
+            return View(viewModel);
+		}
+
+	}
 }

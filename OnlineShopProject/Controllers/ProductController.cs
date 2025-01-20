@@ -13,7 +13,7 @@ namespace OnlineShopProject.Controllers
             this.shopRepository = repository;
         }
 
-		public IActionResult ShowProduct(int productId)
+		public IActionResult ShowProduct(long productId)
 		{
 			try
 			{
