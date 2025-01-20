@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.AspNetCore.Rewrite;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
@@ -213,6 +214,20 @@ namespace OnlineShopProject.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [HttpPost("{productId}")]
+        [ActionName("DeleteProduct")]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            try
+            {
+                var result = this.shopRepository.
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
     }

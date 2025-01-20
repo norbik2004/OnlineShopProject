@@ -12,5 +12,6 @@ namespace OnlineShopProject.Services.Repository
 
 		IEnumerable<Users> GetAllUsers();
 
+		Task<bool> DeleteProductAsync(int productId);
     }
 }

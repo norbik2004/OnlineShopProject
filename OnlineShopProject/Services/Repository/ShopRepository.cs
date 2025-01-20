@@ -64,5 +64,26 @@ namespace OnlineShopProject.Services.Repository
 
 			return users;
 		}
+
+        public async Task<bool> DeleteProductAsync(int productId)
+        {
+			if (productId < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(productId), "product id below 0");
+			}
+
+			var product = await this.ShopContext.Products.FindAsync(productId);
+
+			if (product == null)
+			{
+				throw new KeyNotFoundException("product not found");
+			}
+
+			this.ShopContext.Products.Remove(product);
+
+			await this.ShopContext.SaveChangesAsync();
+
+			return true;
+        }
     }
 }
