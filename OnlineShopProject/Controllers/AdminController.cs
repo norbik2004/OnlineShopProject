@@ -259,5 +259,32 @@ namespace OnlineShopProject.Controllers
             return View(viewModel);
 		}
 
+        [HttpPost]
+        public async Task<IActionResult> ProductChangeDetails(long productId, AdminProductChangeDataViewModel model)
+        {
+            var product = this.shopRepository.ShowProductById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            Category modelCategory = this.shopRepository.GetCategoryById(model.CategoryId);
+
+            model.Category = modelCategory;
+            model.Categories = this.shopRepository.GetAllCategories();
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.Category = model.Category;
+            product.CategoryId = model.CategoryId;
+            
+            this.shopRepository.UpdateProduct(product);
+            await this.shopRepository.SaveChangesAsync();
+
+            return RedirectToAction("ViewProductDetails", "Admin", new { productId = model.ProductId });
+        }
+
 	}
 }

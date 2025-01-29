@@ -15,5 +15,11 @@ namespace OnlineShopProject.Services.Repository
 		Task<bool> DeleteProductAsync(long productId);
 
 		List<Category> GetAllCategories();
+
+		Category GetCategoryById(int categoryId);
+
+		void UpdateProduct(Product product);
+
+		Task SaveChangesAsync();
     }
 }

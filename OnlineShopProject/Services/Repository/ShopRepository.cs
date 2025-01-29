@@ -113,5 +113,31 @@ namespace OnlineShopProject.Services.Repository
 
 			return categories;
 		}
-	}
+
+		public Category GetCategoryById(int categoryId)
+		{
+			if(categoryId < 0 || categoryId == 0)
+			{
+                throw new KeyNotFoundException("Bad ID");
+            }
+
+			Category category = this.ShopContext.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+
+			if (category == null)
+			{
+				throw new KeyNotFoundException("Bad ID");
+			}
+			return category;
+		}
+
+        public void UpdateProduct(Product product)
+        {
+            this.ShopContext.Products.Update(product);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await this.ShopContext.SaveChangesAsync();
+        }
+    }
 }
