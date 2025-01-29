@@ -8,6 +8,7 @@
 		public decimal Price { get; set; }
 		public int CategoryId { get; set; }
 		public string IMGFileLink { get; set; } = string.Empty;
+		public IFormFile? Photo { get; set; }
 		public Category Category { get; set; }
 		public List<Category> Categories { get; set; }
 	}

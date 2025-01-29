@@ -279,8 +279,43 @@ namespace OnlineShopProject.Controllers
             product.Price = model.Price;
             product.Category = model.Category;
             product.CategoryId = model.CategoryId;
-            product.IMGFileLink = model.IMGFileLink;
-            
+
+            if (model.Photo != null)
+            {
+                var extension = Path.GetExtension(model.Photo.FileName)?.ToLower();
+
+                if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif")
+                {
+                    ModelState.AddModelError("Photo", "Only .jpg, .png, and .gif files are allowed.");
+                    return View(model);
+                }
+
+                var fileName = model.Photo.FileName;
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images"));
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.Photo.CopyToAsync(fileStream);
+                }
+
+                if (product.IMGFileLink != null)
+                {
+                    string photoPath = product.IMGFileLink.TrimStart('/');
+
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", photoPath) + extension;
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+
+                product.IMGFileLink = Path.GetFileNameWithoutExtension(fileName);
+            }
+
             this.shopRepository.UpdateProduct(product);
             await this.shopRepository.SaveChangesAsync();
 

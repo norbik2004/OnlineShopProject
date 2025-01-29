@@ -38,8 +38,9 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="IMGFileLink" class="form-label">Image URL</label>
-        <input type="text" id="IMGFileLink" name="IMGFileLink" class="form-control" value="@Model.IMGFileLink" />
+        <label asp-for="Photo">Upload a Photo: </label>
+        <input asp-for="Photo" type="file" id="Photo" class="form-control" name="Photo" accept="image/*" onchange="previewImage(event)">
+        <span asp-validation-for="Photo" class="text-danger" value="@Model.Photo"></span>
     </div>
 
     <div class="row">
