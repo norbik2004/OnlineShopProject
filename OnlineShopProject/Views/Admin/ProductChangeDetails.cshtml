@@ -1,0 +1,55 @@
+﻿@model AdminProductChangeDataViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Change Data of Product</h2>
+
+<form method="post" asp-action="ProductChangeDetails" asp-route-productId="@Model.ProductId" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Product Name</label>
+        <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea id="Description" name="Description" class="form-control" rows="3" required>@Model.Description</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input id="Price" name="Price" class="form-control" value=@Model.Price required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label">Category</label>
+        <select id="Category" name="CategoryId" class="form-select" required>
+            <option value="@Model.CategoryId" selected>@Model.Category?.CategoryName</option>
+            @foreach (var category in Model.Categories)
+            {
+                if(Model.Category.CategoryId == category.CategoryId)
+                {
+                    continue;
+                }
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Photo">Upload a Photo: </label>
+        <input asp-for="Photo" type="file" id="Photo" class="form-control" name="Photo" accept=".png" onchange="previewImage(event)">
+        <span asp-validation-for="Photo" class="text-danger" value="@Model.Photo"></span>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a asp-action="ViewProductDetails" asp-route-productId="@Model.ProductId" class="btn btn-danger w-100 p-2">Back</a>
+        </div>
+
+        <div class="col">
+            <input type="submit" value="Change Data" class="btn btn-success w-100 p-2" />
+        </div>
+    </div>
+</form>

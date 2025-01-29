@@ -20,7 +20,7 @@ namespace OnlineShopProject.Services.Repository
 					.ThenInclude(p => p.Products);
 		}
 
-        public Product ShowProductById(int productId)
+        public Product ShowProductById(long productId)
         {
 			if (productId < 0)
 			{
@@ -64,5 +64,80 @@ namespace OnlineShopProject.Services.Repository
 
 			return users;
 		}
+
+        public async Task<bool> DeleteProductAsync(long productId)
+        {
+			if (productId < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(productId), "product id below 0");
+			}
+
+			var product = await this.ShopContext.Products.FindAsync(productId);
+
+			if (product == null)
+			{
+				throw new KeyNotFoundException("product not found");
+			}
+
+            if (!string.IsNullOrEmpty(product.IMGFileLink))
+            {
+                DeleteImage(product.IMGFileLink);
+            }
+
+            this.ShopContext.Products.Remove(product);
+
+			await this.ShopContext.SaveChangesAsync();
+
+			return true;
+        }
+
+        private void DeleteImage(string imagePath)
+        {
+            string basePath = AppContext.BaseDirectory;
+
+            string rootPath = basePath.Substring(0, basePath.IndexOf("bin", StringComparison.Ordinal));
+
+            string fullPath = Path.Combine(rootPath, "wwwroot", "images", imagePath);
+
+			fullPath += ".png";
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+		public List<Category> GetAllCategories()
+		{
+			List<Category> categories = this.ShopContext.Categories.ToList();
+
+			return categories;
+		}
+
+		public Category GetCategoryById(int categoryId)
+		{
+			if(categoryId < 0 || categoryId == 0)
+			{
+                throw new KeyNotFoundException("Bad ID");
+            }
+
+			Category category = this.ShopContext.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+
+			if (category == null)
+			{
+				throw new KeyNotFoundException("Bad ID");
+			}
+			return category;
+		}
+
+        public void UpdateProduct(Product product)
+        {
+            this.ShopContext.Products.Update(product);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await this.ShopContext.SaveChangesAsync();
+        }
     }
 }

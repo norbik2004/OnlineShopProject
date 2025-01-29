@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.AspNetCore.Rewrite;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
@@ -215,5 +216,111 @@ namespace OnlineShopProject.Controllers
             return View(viewModel);
         }
 
-    }
+        [HttpPost("{productId}")]
+        [ActionName("DeleteProduct")]
+        public async Task<IActionResult> DeleteProduct(long productId)
+        {
+            try
+            {
+                var result = await this.shopRepository.DeleteProductAsync(productId);
+
+                if (result)
+                {
+                    return RedirectToAction("ViewProducts", "Admin");
+                }
+
+                return BadRequest("Product could not be deleted.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        
+		public IActionResult ProductChangeDetails(long productId)
+        {
+            Product product = this.shopRepository.ShowProductById(productId);
+            List<Category> categories = this.shopRepository.GetAllCategories();
+
+			AdminProductChangeDataViewModel
+                viewModel = new()
+			{
+				ProductId = product.ProductId,
+				Price = product.Price,
+				Description = product.Description,
+				Category = product.Category,
+				CategoryId = product.CategoryId,
+				IMGFileLink = product.IMGFileLink,
+				Name = product.Name,
+                Categories = categories,
+			};
+
+            return View(viewModel);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> ProductChangeDetails(long productId, AdminProductChangeDataViewModel model)
+        {
+            var product = this.shopRepository.ShowProductById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            Category modelCategory = this.shopRepository.GetCategoryById(model.CategoryId);
+
+            model.Category = modelCategory;
+            model.Categories = this.shopRepository.GetAllCategories();
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.Category = model.Category;
+            product.CategoryId = model.CategoryId;
+
+            if (model.Photo != null)
+            {
+                var extension = Path.GetExtension(model.Photo.FileName)?.ToLower();
+
+                if (extension != ".png")
+                {
+                    ModelState.AddModelError("Photo", "Only .png files are allowed.");
+                    return View(model);
+                }
+
+                var fileName = model.Photo.FileName;
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images"));
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.Photo.CopyToAsync(fileStream);
+                }
+
+                if (product.IMGFileLink != null)
+                {
+                    string photoPath = product.IMGFileLink.TrimStart('/');
+
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", photoPath) + extension;
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+
+                product.IMGFileLink = Path.GetFileNameWithoutExtension(fileName);
+            }
+
+            this.shopRepository.UpdateProduct(product);
+            await this.shopRepository.SaveChangesAsync();
+
+            return RedirectToAction("ViewProductDetails", "Admin", new { productId = model.ProductId });
+        }
+
+	}
 }
