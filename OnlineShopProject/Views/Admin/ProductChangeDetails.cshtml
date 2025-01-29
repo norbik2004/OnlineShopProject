@@ -39,7 +39,7 @@
 
     <div class="mb-3">
         <label asp-for="Photo">Upload a Photo: </label>
-        <input asp-for="Photo" type="file" id="Photo" class="form-control" name="Photo" accept="image/*" onchange="previewImage(event)">
+        <input asp-for="Photo" type="file" id="Photo" class="form-control" name="Photo" accept=".png" onchange="previewImage(event)">
         <span asp-validation-for="Photo" class="text-danger" value="@Model.Photo"></span>
     </div>
 

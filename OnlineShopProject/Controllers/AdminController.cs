@@ -284,9 +284,9 @@ namespace OnlineShopProject.Controllers
             {
                 var extension = Path.GetExtension(model.Photo.FileName)?.ToLower();
 
-                if (extension != ".jpg" && extension != ".jpeg" && extension != ".png" && extension != ".gif")
+                if (extension != ".png")
                 {
-                    ModelState.AddModelError("Photo", "Only .jpg, .png, and .gif files are allowed.");
+                    ModelState.AddModelError("Photo", "Only .png files are allowed.");
                     return View(model);
                 }
 
