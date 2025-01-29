@@ -279,6 +279,7 @@ namespace OnlineShopProject.Controllers
             product.Price = model.Price;
             product.Category = model.Category;
             product.CategoryId = model.CategoryId;
+            product.IMGFileLink = model.IMGFileLink;
             
             this.shopRepository.UpdateProduct(product);
             await this.shopRepository.SaveChangesAsync();
