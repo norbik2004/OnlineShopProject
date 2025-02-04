@@ -12,5 +12,7 @@ namespace OnlineShopProject.Services
         public DbSet<Product> Products => Set<Product>();
 
         public DbSet<Category> Categories => Set<Category>();
+
+        public DbSet<Comments> Comments => Set<Comments>();
     }
 }
