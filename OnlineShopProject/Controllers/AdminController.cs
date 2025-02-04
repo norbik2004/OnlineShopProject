@@ -182,7 +182,7 @@ namespace OnlineShopProject.Controllers
         {
 			if (ModelState.IsValid)
 			{
-				int pageSize = 5;
+				int pageSize = 10;
                 IQueryable<Product> products = this.shopRepository.GetProducts();
 
                 IQueryable<Product> productsToShow = products.Skip((page - 1) * pageSize).Take(pageSize);
