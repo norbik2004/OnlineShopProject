@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace OnlineShopProject.Migrations
+namespace OnlineShopProject.Migrations.OnlineShopIdentityDb
 {
-    public partial class AddProductsNavigation : Migration
+    public partial class CommentTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

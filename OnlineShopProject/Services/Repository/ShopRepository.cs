@@ -6,17 +6,15 @@ namespace OnlineShopProject.Services.Repository
 {
 	public class ShopRepository : IShopRepository
 	{
-		public OnlineShopDbContext ShopContext { get; set; }
 		public OnlineShopIdentityDbContext IdentityContext { get; set; }
 
-		public ShopRepository(OnlineShopDbContext context, OnlineShopIdentityDbContext idContext) 
+		public ShopRepository(OnlineShopIdentityDbContext idContext) 
 		{
-			this.ShopContext = context;
 			this.IdentityContext = idContext;
 		}
 		public IQueryable<Product> GetProducts()
 		{
-			return this.ShopContext.Products.Include(p => p.Category)
+			return this.IdentityContext.Products.Include(p => p.Category)
 					.ThenInclude(p => p.Products);
 		}
 
@@ -27,7 +25,7 @@ namespace OnlineShopProject.Services.Repository
 				throw new KeyNotFoundException($"Product with ID {productId} not found.");
 			}
 
-			var product = this.ShopContext.Products
+			var product = this.IdentityContext.Products
                 .Include(p => p.Category)
 					.ThenInclude(p => p.Products)
                 .FirstOrDefault(p => p.ProductId == productId);
@@ -72,7 +70,7 @@ namespace OnlineShopProject.Services.Repository
 				throw new ArgumentOutOfRangeException(nameof(productId), "product id below 0");
 			}
 
-			var product = await this.ShopContext.Products.FindAsync(productId);
+			var product = await this.IdentityContext.Products.FindAsync(productId);
 
 			if (product == null)
 			{
@@ -84,9 +82,9 @@ namespace OnlineShopProject.Services.Repository
                 DeleteImage(product.IMGFileLink);
             }
 
-            this.ShopContext.Products.Remove(product);
+            this.IdentityContext.Products.Remove(product);
 
-			await this.ShopContext.SaveChangesAsync();
+			await this.IdentityContext.SaveChangesAsync();
 
 			return true;
         }
@@ -109,7 +107,7 @@ namespace OnlineShopProject.Services.Repository
 
 		public List<Category> GetAllCategories()
 		{
-			List<Category> categories = this.ShopContext.Categories.ToList();
+			List<Category> categories = this.IdentityContext.Categories.ToList();
 
 			return categories;
 		}
@@ -121,7 +119,7 @@ namespace OnlineShopProject.Services.Repository
                 throw new KeyNotFoundException("Bad ID");
             }
 
-			Category category = this.ShopContext.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+			Category category = this.IdentityContext.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
 
 			if (category == null)
 			{
@@ -132,12 +130,12 @@ namespace OnlineShopProject.Services.Repository
 
         public void UpdateProduct(Product product)
         {
-            this.ShopContext.Products.Update(product);
+            this.IdentityContext.Products.Update(product);
         }
 
         public async Task SaveChangesAsync()
         {
-            await this.ShopContext.SaveChangesAsync();
+            await this.IdentityContext.SaveChangesAsync();
         }
     }
 }
