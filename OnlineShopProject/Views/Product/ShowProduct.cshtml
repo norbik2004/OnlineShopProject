@@ -79,7 +79,7 @@
             </div>
             
             <div class="card-footer bg-light text-center">
-                @await Component.InvokeAsync("CommentSection")
+                @await Component.InvokeAsync("CommentSection", new { productId = Model.ProductId })
             </div>
 
         </div>

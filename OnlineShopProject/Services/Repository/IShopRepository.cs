@@ -21,5 +21,7 @@ namespace OnlineShopProject.Services.Repository
 		void UpdateProduct(Product product);
 
 		Task SaveChangesAsync();
+
+		List<Comments> GetAllComments(long productId);
     }
 }

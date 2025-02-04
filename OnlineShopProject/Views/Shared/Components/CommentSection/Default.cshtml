@@ -1,3 +1,33 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity;
+@using OnlineShopProject.Services
+@inject SignInManager<Users> signInManager;
+
+@model List<Comments>
+
 <h6>Comment Section</h6>
-<a>COMMENTS!</a>
+
+@if (!signInManager.IsSignedIn(User))
+{
+	<h6>Login to write comments!</h6>
+	<a class="btn btn-primary" asp-action="Login" asp-controller="Account">Login</a>
+}else{
+    @if (Model != null && Model.Any())
+    {
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <ul>
+                @foreach (var comment in Model)
+                {
+                    <li>
+                        <strong>@comment.User.UserName:</strong> @comment.Text
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+}
+

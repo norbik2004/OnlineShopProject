@@ -137,5 +137,14 @@ namespace OnlineShopProject.Services.Repository
         {
             await this.IdentityContext.SaveChangesAsync();
         }
+
+		public List<Comments> GetAllComments(long productId)
+		{
+            return this.IdentityContext.Comments
+				.Where(p => p.ProductId == productId)
+				.Include(c => c.User)
+				.ToList();
+
+        }
     }
 }
