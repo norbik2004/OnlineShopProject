@@ -10,12 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
-// Registration of the DbContext Service
-builder.Services.AddDbContext<OnlineShopDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(connectionString);
-});
+// Identity services
+builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options =>
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]));
 
 // Registration of repository services
 builder.Services.AddScoped<IShopRepository, ShopRepository>();
@@ -25,11 +22,6 @@ builder.Services.Configure<FormOptions>(options =>
 	options.ValueLengthLimit = 1024 * 1024 * 10;  // 10 MB
 	options.MultipartBodyLengthLimit = 1024 * 1024 * 10;  // 10 MB
 });
-
-
-// Identity services
-builder.Services.AddDbContext<OnlineShopIdentityDbContext>(options =>
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]));
 
 builder.Services.AddIdentity<Users, IdentityRole>(options =>
 {
