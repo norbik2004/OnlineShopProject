@@ -1,25 +1,48 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@using OnlineShopProject.Services
+@using OnlineShopProject.Services;
+@using OnlineShopProject.Services.ViewModels.Product;
 @inject SignInManager<Users> signInManager;
 
-@model List<Comments>
+@model List<CommentViewModel>
 
 <h6>Comment Section</h6>
 
 @if (!signInManager.IsSignedIn(User))
 {
-	<h6>Login to write comments!</h6>
-	<a class="btn btn-primary" asp-action="Login" asp-controller="Account">Login</a>
-}else{
+    <div class="alert alert-warning" role="alert">
+        <h6>Login to write comments!</h6>
+        <a class="btn btn-primary" asp-action="Login" asp-controller="Account">Login</a>
+    </div>
+}
+else
+{
     @if (Model != null && Model.Any())
     {
-        <div class="comments-section">
-            <h3>Comments</h3>
-            <ul>
+        <div class="comments-section w-100">
+            <h3 class="mb-3">Comments</h3>
+            <ul class="list-group">
                 @foreach (var comment in Model)
                 {
-                    <li>
-                        <strong>@comment.User.UserName:</strong> @comment.Text
+                    <li class="list-group-item border rounded p-3 mb-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <strong class="text-primary me-2">@comment.UserEmail</strong>
+                                <div class="text-warning">
+                                    @for (int i = 0; i < comment.Rating; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
+                                    @for (int i = comment.Rating; i < 5; i++)
+                                    {
+                                        <i class="far fa-star"></i>
+                                    }
+                                </div>
+                            </div>
+
+                            <b class="text-muted">@comment.PublicationDate.ToString("dd.MM.yyyy HH:mm")</b>
+                        </div>
+
+                        <p class="mt-2 mb-0 text-start">@comment.Text</p>
                     </li>
                 }
             </ul>
@@ -27,7 +50,6 @@
     }
     else
     {
-        <p>No comments yet.</p>
+        <div class="alert alert-info">No comments yet.</div>
     }
 }
-

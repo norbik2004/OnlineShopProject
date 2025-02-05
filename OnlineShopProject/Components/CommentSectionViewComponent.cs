@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopProject.Services.Repository;
+using OnlineShopProject.Services.ViewModels.Product;
 
 namespace OnlineShopProject.Components
 {
@@ -16,7 +17,17 @@ namespace OnlineShopProject.Components
 		public IViewComponentResult Invoke(long productId)
 		{
 			var comments = this.repository.GetAllComments(productId);
-			return View(comments);
+
+            List<CommentViewModel> viewModel = comments.Select(comment => new CommentViewModel
+            {
+                ProductId = comment.ProductId,
+                UserEmail = comment.User.Email,
+                Text = comment.Text,
+                Rating = comment.Rating,
+                PublicationDate = comment.PublicationDate
+            }).ToList();
+
+            return View(viewModel);
 		}
 	}
 }
