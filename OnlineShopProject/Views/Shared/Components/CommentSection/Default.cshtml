@@ -1,3 +1,90 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity;
+@using OnlineShopProject.Services;
+@using OnlineShopProject.Services.ViewModels.Product;
+@inject SignInManager<Users> signInManager;
+
+@model List<CommentViewModel>
+
+<script src="~/js/comment.js"></script>
+
 <h6>Comment Section</h6>
-<a>COMMENTS!</a>
+
+@if (!signInManager.IsSignedIn(User))
+{
+    <div class="alert alert-warning" role="alert">
+        <h6>Login to write comments!</h6>
+        <a class="btn btn-primary" asp-action="Login" asp-controller="Account">Login</a>
+    </div>
+}
+else
+{
+    <h5 class="mb-3">Leave a Comment</h5>
+    <div class="w-100">
+        <form asp-action="CommentPublication" asp-controller="Product" method="post" class="border rounded p-4 mb-4"
+        asp-route-productId="@ViewData["ProductId"]">
+
+            <div class="mb-3">
+                <label class="form-label text-start d-block">Rating:</label>
+                <div class="d-flex align-items-center">
+                    <select class="form-select w-auto" name="Rating">
+                        <option value="5">★★★★★ (5)</option>
+                        <option value="4">★★★★☆ (4)</option>
+                        <option value="3">★★★☆☆ (3)</option>
+                        <option value="2">★★☆☆☆ (2)</option>
+                        <option value="1">★☆☆☆☆ (1)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-start d-block">Comment:</label>
+                <textarea class="form-control" name="Text" id="commentText" rows="3" maxlength="150"
+                          placeholder="Write your comment here..." oninput="updateCharCount()"
+                          style="resize:none;"></textarea>
+                <small class="text-muted" id="charCount">100 characters remaining</small>
+            </div>
+
+            
+
+            <input type="submit" value="Send Comment" class="btn btn-success w-100 p-2" />
+        </form>
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="comments-section w-100">
+        <h3 class="mb-3">Comments</h3>
+        <ul class="list-group">
+            @foreach (var comment in Model)
+            {
+                <li class="list-group-item border rounded p-3 mb-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <strong class="text-primary me-2">@comment.UserEmail</strong>
+                            <div class="text-warning">
+                                @for (int i = 0; i < comment.Rating; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                @for (int i = comment.Rating; i < 5; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            </div>
+                        </div>
+
+                        <b class="text-muted">@comment.PublicationDate.ToString("dd.MM.yyyy HH:mm")</b>
+                    </div>
+
+                    <p class="mt-2 mb-0 text-start">@comment.Text</p>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">No comments yet.</div>
+}
+

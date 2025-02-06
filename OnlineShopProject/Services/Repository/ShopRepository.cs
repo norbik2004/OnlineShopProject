@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineShopProject.Services.ViewModels.Product;
 
 namespace OnlineShopProject.Services.Repository
 {
@@ -137,5 +138,30 @@ namespace OnlineShopProject.Services.Repository
         {
             await this.IdentityContext.SaveChangesAsync();
         }
+
+		public List<Comments> GetAllComments(long productId)
+		{
+            return this.IdentityContext.Comments
+				.Where(p => p.ProductId == productId)
+				.Include(c => c.User)
+				.OrderByDescending(p => p.PublicationDate)
+				.ToList();
+
+        }
+
+		public async Task SaveComment(Comments comment)
+		{
+            Comments model = new()
+			{
+				ProductId = comment.ProductId,
+				UserId = comment.UserId,
+				Text = comment.Text,
+				Rating = comment.Rating,
+				PublicationDate = comment.PublicationDate
+			};
+
+			await this.IdentityContext.AddAsync(model);
+			await this.IdentityContext.SaveChangesAsync();
+		}
     }
 }

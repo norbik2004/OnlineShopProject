@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using OnlineShopProject.Services.ViewModels.Product;
 
 namespace OnlineShopProject.Services.Repository
 {
@@ -21,5 +22,9 @@ namespace OnlineShopProject.Services.Repository
 		void UpdateProduct(Product product);
 
 		Task SaveChangesAsync();
-    }
+
+		List<Comments> GetAllComments(long productId);
+
+		Task SaveComment(Comments comment);
+	}
 }
