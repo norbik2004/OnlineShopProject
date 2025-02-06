@@ -144,6 +144,7 @@ namespace OnlineShopProject.Services.Repository
             return this.IdentityContext.Comments
 				.Where(p => p.ProductId == productId)
 				.Include(c => c.User)
+				.OrderByDescending(p => p.PublicationDate)
 				.ToList();
 
         }
