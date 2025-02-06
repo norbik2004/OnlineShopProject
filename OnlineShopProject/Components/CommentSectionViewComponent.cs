@@ -14,9 +14,9 @@ namespace OnlineShopProject.Components
 			this.repository = repository;
 		}
 
-		public IViewComponentResult Invoke(long productId)
-		{
-			var comments = this.repository.GetAllComments(productId);
+        public IViewComponentResult Invoke(long productId)
+        {
+            var comments = this.repository.GetAllComments(productId);
 
             List<CommentViewModel> viewModel = comments.Select(comment => new CommentViewModel
             {
@@ -28,6 +28,7 @@ namespace OnlineShopProject.Components
             }).ToList();
 
             return View(viewModel);
-		}
-	}
+        }
+
+    }
 }

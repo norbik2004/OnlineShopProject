@@ -21,7 +21,7 @@ else
     <h5 class="mb-3">Leave a Comment</h5>
     <div class="w-100">
         <form asp-action="CommentPublication" asp-controller="Product" method="post" class="border rounded p-4 mb-4"
-        asp-route-productId="@Model[0].ProductId">
+        asp-route-productId="@ViewData["ProductId"]">
 
             <div class="mb-3">
                 <label class="form-label text-start d-block">Rating:</label>

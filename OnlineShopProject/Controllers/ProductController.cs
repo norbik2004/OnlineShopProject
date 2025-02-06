@@ -20,7 +20,8 @@ namespace OnlineShopProject.Controllers
 
 		public IActionResult ShowProduct(long productId)
 		{
-			try
+            ViewData["ProductId"] = productId;
+            try
 			{
 				var product = this.shopRepository.ShowProductById(productId);
 
@@ -41,7 +42,6 @@ namespace OnlineShopProject.Controllers
 		public async Task<IActionResult> CommentPublication(CommentViewModel viewModel, long productId)
 		{
 			var user = await this.userManager.GetUserAsync(User);
-			var product = this.shopRepository.ShowProductById(productId);
 
 			viewModel.UserEmail = user.Email;
 			viewModel.ProductId = productId;
