@@ -24,7 +24,8 @@ namespace OnlineShopProject.Components
                 UserEmail = comment.User.Email,
                 Text = comment.Text,
                 Rating = comment.Rating,
-                PublicationDate = comment.PublicationDate
+                PublicationDate = comment.PublicationDate,
+                PhotoURL = comment.User.PhotoPath,
             }).ToList();
 
             return View(viewModel);
