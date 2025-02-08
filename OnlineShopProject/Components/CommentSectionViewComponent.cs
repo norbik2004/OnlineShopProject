@@ -18,6 +18,9 @@ namespace OnlineShopProject.Components
         public IViewComponentResult Invoke(long productId, int page = 1)
         {
             page = Convert.ToInt32(HttpContext.Request.Query["page"]);
+            double avgRating = this.repository.GetRatingOfComments(productId);
+
+            ViewData["avgRating"] = avgRating;
 
             page = page == 0 ? 1 : page;
             int pageSize = 5;

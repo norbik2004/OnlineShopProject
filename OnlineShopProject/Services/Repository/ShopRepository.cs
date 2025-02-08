@@ -163,5 +163,20 @@ namespace OnlineShopProject.Services.Repository
 			await this.IdentityContext.AddAsync(model);
 			await this.IdentityContext.SaveChangesAsync();
 		}
+
+		public double GetRatingOfComments(long productId)
+		{
+			var comments = this.IdentityContext.Comments
+                .Where(c => c.ProductId == productId);
+
+            double sum = 0;
+
+			foreach (var comment in comments)
+			{
+				sum += comment.Rating;
+			}
+
+			return sum / comments.Count();
+		}
     }
 }

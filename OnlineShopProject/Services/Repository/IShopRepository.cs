@@ -26,5 +26,7 @@ namespace OnlineShopProject.Services.Repository
 		List<Comments> GetAllComments(long productId);
 
 		Task SaveComment(Comments comment);
+
+		double GetRatingOfComments(long productId);
 	}
 }

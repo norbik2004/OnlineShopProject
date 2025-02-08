@@ -12,6 +12,7 @@
     int currentPage = ViewData["CurrentPage"] as int? ?? 1;
     int totalPages = ViewData["TotalPages"] as int? ?? 1;
     int userAmount = ViewData["TotalProducts"] as int? ?? 1;
+    double avgRating = ViewData["avgRating"] as double? ?? 1;
 
     int startIndex = (currentPage - 1) * pageSize + 1;
     int endIndex = currentPage * pageSize;
@@ -67,6 +68,7 @@ else
 {
     <div class="comments-section w-100">
         <h3 class="mb-3">Comments</h3>
+        <h6>Rating: <a style="font-weight: bold;">@avgRating.ToString("F2")</a></h6>
         <h6>Showing @startIndex - @endIndex of @userAmount</h6>
         <ul class="list-group">
             @foreach (var comment in Model)
