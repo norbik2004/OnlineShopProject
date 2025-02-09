@@ -71,6 +71,7 @@ namespace OnlineShopProject.Controllers
 					FullName = model.Name,
 					Email = model.Email,
 					UserName = model.Email,
+					PhotoPath = "/uploads/basic.png",
 				};
 
 				var result = await userManager.CreateAsync(users, model.Password);

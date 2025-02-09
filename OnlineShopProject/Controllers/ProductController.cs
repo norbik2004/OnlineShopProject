@@ -67,5 +67,13 @@ namespace OnlineShopProject.Controllers
                 return RedirectToAction("ShowProduct", "Product", new { productId = viewModel.ProductId });
             }
         }
-	}
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(long commentId, long productId)
+        {
+            await this.shopRepository.DeleteComment(commentId);
+            return RedirectToAction("ShowProduct", new {productId});
+        }
+    }
 }

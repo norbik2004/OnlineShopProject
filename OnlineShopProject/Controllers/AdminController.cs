@@ -27,7 +27,8 @@ namespace OnlineShopProject.Controllers
 
         public IActionResult Dashboard()
         {
-            return View();
+            var newestComments = this.shopRepository.GetNewestComments();
+            return View(newestComments);
         }
 
         public IActionResult Users(int page = 1)
