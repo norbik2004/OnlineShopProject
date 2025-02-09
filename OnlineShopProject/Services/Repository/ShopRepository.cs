@@ -1,5 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopProject.Services.ViewModels.Product;
 
@@ -178,5 +181,26 @@ namespace OnlineShopProject.Services.Repository
 
 			return sum / comments.Count();
 		}
+
+        public async Task DeleteComment(long commentId)
+        {
+			var comment = await this.IdentityContext.Comments
+				.FirstOrDefaultAsync(p => p.CommentId == commentId);
+
+			if (comment == null)
+			{
+				throw new KeyNotFoundException("Comment not found");
+            }
+
+            this.IdentityContext.Comments.Remove(comment);
+			await this.IdentityContext.SaveChangesAsync();
+        }
+
+        public List<Comments> GetNewestComments()
+        {
+            return this.IdentityContext.Comments
+				.Include(c => c.User)
+				.Take(5).ToList();
+        }
     }
 }

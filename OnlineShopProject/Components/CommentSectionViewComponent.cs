@@ -31,6 +31,7 @@ namespace OnlineShopProject.Components
             List<CommentViewModel> viewModel = commentsToShow.Select(commentsToShow => new CommentViewModel
             {
                 ProductId = commentsToShow.ProductId,
+                CommentId = commentsToShow.CommentId,
                 UserEmail = commentsToShow.User.Email,
                 Text = commentsToShow.Text,
                 Rating = commentsToShow.Rating,

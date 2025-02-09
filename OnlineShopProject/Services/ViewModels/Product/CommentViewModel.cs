@@ -3,6 +3,7 @@
     public class CommentViewModel
     {
         public long ProductId { get; set; }
+        public long CommentId { get; set; }
         public string UserEmail { get; set; } = string.Empty;
         public int Rating { get; set; }
         public DateTime PublicationDate { get; set; }
