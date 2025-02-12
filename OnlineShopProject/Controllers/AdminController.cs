@@ -219,6 +219,7 @@ namespace OnlineShopProject.Controllers
                 Price = product.Price,
                 Description = product.Description,
                 Category = product.Category,
+                AvgRating = this.shopRepository.GetRatingOfComments(productId),
                 CategoryId = product.CategoryId,
                 IMGFileLink = product.IMGFileLink,
                 Name = product.Name,
