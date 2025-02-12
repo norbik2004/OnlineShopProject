@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
+using System.Globalization;
 
 namespace OnlineShopProject.Controllers
 {
@@ -14,14 +15,22 @@ namespace OnlineShopProject.Controllers
             this.shopRepository = repo;
         }
 
-        public ViewResult Index(string? category, int page = 1)
+        public ViewResult Index(string? category, string? sortBy, int page = 1)
         {
             ViewData["SelectedCategory"] = category;
+            ViewData["SelectedSortBy"] = sortBy;
 
             if (ModelState.IsValid)
             {
                 int pageSize = 9;
                 IQueryable<Product> products = this.shopRepository.GetProducts().Where(p => category == null || p.Category.CategoryName == category);
+
+                products = sortBy switch
+                {
+                    "price_asc" => products.OrderBy(p => p.Price),
+                    "price_desc" => products.OrderByDescending(p => p.Price),
+                    _ => products
+                };
 
                 IQueryable<Product> productsToShow = products.Skip((page - 1) * pageSize).Take(pageSize);
 

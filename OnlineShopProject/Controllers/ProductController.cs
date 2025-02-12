@@ -63,7 +63,7 @@ namespace OnlineShopProject.Controllers
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = $"There was an error saving your comment. Please try again later. {ex.Message}";
+                TempData["ErrorMessage"] = $"There was an error saving your comment. Please try again later.";
                 return RedirectToAction("ShowProduct", "Product", new { productId = viewModel.ProductId });
             }
         }

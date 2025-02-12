@@ -11,6 +11,7 @@ namespace OnlineShopProject.Services.ViewModels.Admin
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
         public string IMGFileLink { get; set; } = string.Empty;
+        public double AvgRating { get; set; }
         public Category Category { get; set; }
     }
 }

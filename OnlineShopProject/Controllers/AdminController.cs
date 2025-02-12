@@ -8,6 +8,7 @@ using OnlineShopProject.Services;
 using OnlineShopProject.Services.Repository;
 using OnlineShopProject.Services.ViewModels.Account;
 using OnlineShopProject.Services.ViewModels.Admin;
+using System.Globalization;
 
 namespace OnlineShopProject.Controllers
 {
@@ -179,12 +180,21 @@ namespace OnlineShopProject.Controllers
             return View(model);
         }
 
-        public IActionResult ViewProducts(int page = 1)
+        public IActionResult ViewProducts(string? sortBy, int page = 1)
         {
 			if (ModelState.IsValid)
 			{
-				int pageSize = 10;
+                ViewData["SelectedSortBy"] = sortBy;
+
+                int pageSize = 10;
                 IQueryable<Product> products = this.shopRepository.GetProducts();
+
+                products = sortBy switch
+                {
+                    "price_asc" => products.OrderBy(p => p.Price),
+                    "price_desc" => products.OrderByDescending(p => p.Price),
+                    _ => products
+                };
 
                 IQueryable<Product> productsToShow = products.Skip((page - 1) * pageSize).Take(pageSize);
 
@@ -209,6 +219,7 @@ namespace OnlineShopProject.Controllers
                 Price = product.Price,
                 Description = product.Description,
                 Category = product.Category,
+                AvgRating = this.shopRepository.GetRatingOfComments(productId),
                 CategoryId = product.CategoryId,
                 IMGFileLink = product.IMGFileLink,
                 Name = product.Name,

@@ -14,3 +14,21 @@
         </a>
     }
 </div>
+
+<div class="d-grid gap-2">
+    <span>Sort By:</span>
+    <a class="btn @(ViewData["SelectedSortBy"]?.ToString() == "price_asc" ? "btn-primary" : "btn-outline-secondary")"
+       asp-controller="Home"
+       asp-action="Index"
+       asp-route-sortBy="price_asc"
+       asp-route-category="@ViewData["SelectedCategory"]">
+        Price (Low to High)
+    </a>
+    <a class="btn @(ViewData["SelectedSortBy"]?.ToString() == "price_desc" ? "btn-primary" : "btn-outline-secondary")"
+       asp-controller="Home"
+       asp-action="Index"
+       asp-route-sortBy="price_desc"
+       asp-route-category="@ViewData["SelectedCategory"]">
+        Price (High to Low)
+    </a>
+</div>

@@ -10,3 +10,25 @@
     </a>
 
 </div>
+
+
+@if (ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" &&
+    ViewContext.RouteData.Values["action"]?.ToString() == "ViewProducts")
+{
+    <div class="d-grid gap-2">
+        <span>Sort By:</span>
+        <a class="btn @(ViewData["SelectedSortBy"]?.ToString() == "price_asc" ? "btn-primary" : "btn-outline-secondary")"
+           asp-controller="Admin"
+           asp-action="ViewProducts"
+           asp-route-sortBy="price_asc">
+            Price (Low to High)
+        </a>
+        <a class="btn @(ViewData["SelectedSortBy"]?.ToString() == "price_desc" ? "btn-primary" : "btn-outline-secondary")"
+           asp-controller="Admin"
+           asp-action="ViewProducts"
+           asp-route-sortBy="price_desc">
+            Price (High to Low)
+        </a>
+    </div>
+}
+

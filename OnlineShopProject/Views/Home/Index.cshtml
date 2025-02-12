@@ -47,12 +47,12 @@
 <div class="text-center">
     @if (currentPage > 1)
     {
-        <a asp-action="Index" asp-route-page="@(currentPage - 1)" asp-route-category="@category" class="btn btn-secondary">Back</a>
+        <a asp-action="Index" asp-route-page="@(currentPage - 1)" asp-route-category="@category" class="btn btn-secondary" asp-route-sortBy="@ViewData["SelectedSortBy"]">Back</a>
     }
 
     @if (currentPage < totalPages)
     {
-        <a asp-action="Index" asp-route-page="@(currentPage + 1)" asp-route-category="@category" class="btn btn-primary">Next</a>
+        <a asp-action="Index" asp-route-page="@(currentPage + 1)" asp-route-category="@category" class="btn btn-primary" asp-route-sortBy="@ViewData["SelectedSortBy"]">Next</a>
     }
 </div>
 
