@@ -334,5 +334,18 @@ namespace OnlineShopProject.Controllers
             return RedirectToAction("ViewProductDetails", "Admin", new { productId = model.ProductId });
         }
 
-	}
+        public IActionResult ViewCategories()
+        {
+            List<Category> categories = this.shopRepository.GetAllCategories();
+            return View(categories);
+        }
+
+        [HttpGet("Admin/CategoryDetails/{categoryId}")]
+        public IActionResult CategoryDetails(int categoryId)
+        {
+            Category category = this.shopRepository.GetCategoryById(categoryId);
+            return View(category);
+        }
+
+    }
 }

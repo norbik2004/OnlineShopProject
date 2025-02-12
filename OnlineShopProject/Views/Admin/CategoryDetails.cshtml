@@ -1,0 +1,71 @@
+﻿@model Category
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Category Details</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th colspan="2">Category Information</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Category ID</th>
+            <td>@Model.CategoryId</td>
+        </tr>
+        <tr>
+            <th>Category Name</th>
+            <td>@Model.CategoryName</td>
+        </tr>
+        <tr>
+            <th>Category Description</th>
+            <td>@Model.CategoryDescription</td>
+        </tr>
+    </tbody>
+</table>
+
+@if (Model.Products.Any())
+{
+    <h4 class="mt-4">Products in Category</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.Name</td>
+                    <td class="text-center">
+                        <a asp-action="ViewProductDetails" asp-controller="Admin" asp-route-productId="@product.ProductId"
+                           class="btn btn-primary">
+                            <i class="bi bi-eye"></i> View Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-center text-muted mt-3">No products in this category.</p>
+}
+
+<div class="row mt-4">
+    <div class="col">
+        <a class="btn btn-danger w-100 p-2">Back</a>
+    </div>
+    <div class="col">
+        <a class="btn btn-primary w-100 p-2">Edit Category</a>
+    </div>
+</div>
