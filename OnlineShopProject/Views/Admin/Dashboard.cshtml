@@ -6,42 +6,42 @@
 }
 
 <h2>Dashboard</h2>
-<h6>Something will be here shortly</h6>
 
-@if (Model != null && Model.Any())
-{
-    <h4>Recent Comments</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Author</th>
-                <th>Comment</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var comment in Model)
-            {
-                <tr>
-                    <td>@comment.User.Email</td>
-                    <td>@comment.Text</td>
-                    <td>@comment.PublicationDate.ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>
-                        <form asp-controller="Product" asp-action="DeleteComment" method="post">
-                            <input type="hidden" name="productId" value="@comment.ProductId" />
-                            <input type="hidden" name="commentId" value="@comment.CommentId" />
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No comments available.</p>
-}
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Recent Bad Ratings
+            </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                HERE WILL BE RECENT BAD COMMENTS
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                New Users
+            </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                HERE WILL BE RECENT REGISTERED USERS
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Recent Orders
+            </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                New orders here
+            </div>
+        </div>
+    </div>
+</div>
