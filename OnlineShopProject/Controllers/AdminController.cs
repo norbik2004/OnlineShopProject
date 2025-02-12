@@ -347,5 +347,15 @@ namespace OnlineShopProject.Controllers
             return View(category);
         }
 
+        public IActionResult AddCategory()
+        { 
+            return View();
+        }
+
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
     }
 }
