@@ -1,11 +1,9 @@
-﻿namespace OnlineShopProject.Services.ViewModels.Cart
+﻿namespace OnlineShopProject.Services.ViewModels
 {
     public class CartViewModel
     {
-        public List<CartItem> CartItems { get; set; }
+        public Cart? Cart { get; set; } = new();
 
-        public decimal? TotalPrice { get; set; }
-
-        public decimal? TotalQuantity { get; set; }
+        public string ReturnUrl { get; set; } = "/";
     }
 }
