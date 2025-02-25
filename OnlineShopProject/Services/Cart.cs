@@ -2,15 +2,14 @@
 {
     public class Cart
     {
-        private List<CartItem> items = new List<CartItem>();
+        private readonly List<CartItem> items = new List<CartItem>();
 
         public IReadOnlyList<CartItem> Items { get { return items; } }
 
         public virtual void AddItem(Product product, int quantity)
         {
             CartItem? line = items.
-                Where(p => p.Product.ProductId == product.ProductId)
-                .FirstOrDefault();
+                Find(p => p.Product.ProductId == product.ProductId);
 
             if (line is null)
             {

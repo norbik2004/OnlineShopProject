@@ -1,7 +1,52 @@
 ﻿@{
-	Layout = "_Layout";
+    Layout = "_Layout";
 }
 
-<h1>
-	CART
-</h1>
+@model OnlineShopProject.Services.ViewModels.CartViewModel
+
+<h1>CART</h1>
+
+<ul class="nav nav-tabs" id="cartTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="cart-items-tab" data-bs-toggle="tab" data-bs-target="#cart-items" type="button" role="tab">
+            Cart Items
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3" id="cartTabsContent">
+    <div class="tab-pane fade show active" id="cart-items" role="tabpanel">
+        @if (Model.Cart != null && Model.Cart.Items.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Product.Price.ToString("C")</td>
+                            <td>@((item.Quantity * item.Product.Price).ToString("C"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h4>Total: @Model.Cart.Items.Sum(i => i.Quantity * i.Product.Price).ToString("C")</h4>
+        }
+        else
+        {
+            <p class="text-muted">Your cart is empty.</p>
+        }
+    </div>
+</div>
+
+<a href="@Model.ReturnUrl" class="btn btn-primary mt-3">Continue Shopping</a>
