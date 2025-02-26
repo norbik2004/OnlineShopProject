@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace OnlineShopProject.Services
 {
@@ -14,7 +15,8 @@ namespace OnlineShopProject.Services
 		[Required]
 		public string CategoryDescription { get; set; }
 
-		public virtual ICollection<Product> Products { get; set;} = new List<Product>();
+        [JsonIgnore]
+        public virtual ICollection<Product> Products { get; set;} = new List<Product>();
 
 	}
 }

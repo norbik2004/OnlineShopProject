@@ -111,7 +111,9 @@ namespace OnlineShopProject.Services.Repository
 
 		public List<Category> GetAllCategories()
 		{
-			List<Category> categories = this.IdentityContext.Categories.ToList();
+			List<Category> categories = this.IdentityContext.Categories
+				.Include(p => p.Products)
+				.ToList();
 
 			return categories;
 		}
@@ -123,7 +125,9 @@ namespace OnlineShopProject.Services.Repository
                 throw new KeyNotFoundException("Bad ID");
             }
 
-			Category category = this.IdentityContext.Categories.FirstOrDefault(p => p.CategoryId == categoryId);
+			Category category = this.IdentityContext.Categories
+				.Include(p => p.Products)
+				.FirstOrDefault(p => p.CategoryId == categoryId);
 
 			if (category == null)
 			{
