@@ -28,7 +28,11 @@
 
             <div class="card-footer bg-light text-center">
                 <button class="btn btn-primary btn-lg">Buy Now</button>
-                <button class="btn btn-outline-secondary btn-lg">Add to Cart</button>
+                <form asp-controller="Cart" asp-action="ViewCart" asp-antiforgery="true" method="post">
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                    <button type="submit" class="btn btn-outline-secondary btn-lg">Add to Cart</button>
+                </form>
                 <a class="btn btn-warning btn-lg" asp-action="ViewProductDetails" asp-controller="Admin" asp-route-productId="@Model.ProductId"> Edit</a>
             </div>
 

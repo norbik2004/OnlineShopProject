@@ -28,7 +28,7 @@ namespace OnlineShopProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(long productId, string returnUrl)
+        public IActionResult ViewCart(long productId, string returnUrl)
         {
             Product? product = this.shopRepository.ShowProductById(productId);
 

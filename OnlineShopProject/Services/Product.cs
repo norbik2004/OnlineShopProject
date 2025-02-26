@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace OnlineShopProject.Services
 {
@@ -29,7 +29,8 @@ namespace OnlineShopProject.Services
 		[Required]
 		public string IMGFileLink { get; set; } = string.Empty;
 
-		[Required]
+        [JsonIgnore]
+        [Required]
 		public Category Category { get; set; }
 
 	}
